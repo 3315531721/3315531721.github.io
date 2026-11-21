@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="X‑ING 博客，存放技术笔记、项目记录和零散想法。">
+  <meta name="theme-color" content="#f2efe7">
+  <title>X‑ING 博客</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --paper: #f2efe7;
+      --ink: #23251e;
+      --muted: #55594e;
+      --rule: #bdb9aa;
+      --olive: #dce4bc;
+      --accent: #984021;
+      font-family: system-ui, "PingFang SC", "Microsoft YaHei", sans-serif;
+    }
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-padding-top: 1rem; }
+    body { margin: 0; background: var(--paper); color: var(--ink); line-height: 1.7; }
+    a { color: inherit; text-underline-offset: .3em; }
+    a:focus-visible { outline: 2px solid var(--accent); outline-offset: 5px; }
+    .shell { width: min(100% - 2.5rem, 68rem); margin-inline: auto; }
+    .top, .bottom { display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
+    .top { min-height: 5rem; border-bottom: 1px solid var(--rule); }
+    .brand { letter-spacing: .12em; font-weight: 750; text-decoration: none; }
+    nav { display: flex; flex-wrap: wrap; gap: .75rem 1.75rem; font-size: .94rem; }
+    nav a, .bottom a { text-decoration: none; }
+    nav a:hover, .bottom a:hover { text-decoration: underline; }
+    .hero { padding-block: clamp(4rem, 10vw, 8.5rem) clamp(3rem, 7vw, 5.5rem); }
+    .hero h1 { margin: 0; font: 500 clamp(4rem, 15vw, 11rem)/.91 Georgia, serif; letter-spacing: -.075em; }
+    .hero h1 span { color: var(--accent); }
+    .hero p { margin: 1.5rem 0 0; color: var(--muted); font-size: clamp(1rem, 2.5vw, 1.25rem); }
+    .journal { border-top: 1px solid var(--ink); padding-block: 1.5rem 3.5rem; }
+    .journal h2, .about h2 { margin: 0 0 1.25rem; font-size: 1.3rem; }
+    .entry { background: var(--olive); padding: clamp(1.35rem, 5vw, 3.3rem); }
+    .entry summary { cursor: pointer; display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 1.25rem; list-style: none; }
+    .entry summary::-webkit-details-marker { display: none; }
+    .summary-title { display: block; font-size: clamp(1.45rem, 4vw, 2.4rem); font-weight: 650; }
+    .meta, .summary-description { display: block; color: var(--muted); }
+    .meta { font: .9rem/1.5 ui-monospace, monospace; font-variant-numeric: tabular-nums; }
+    .summary-description { margin-top: .4rem; }
+    .toggle { display: grid; place-items: center; border: 1px solid currentColor; border-radius: 50%; width: 2.5rem; height: 2.5rem; font-size: 1.4rem; }
+    .toggle::before { content: "+"; }
+    details[open] .toggle::before { content: "−"; }
+    .entry-copy { max-width: 44rem; margin-top: 1.5rem; padding-top: .5rem; border-top: 1px solid #979d7d; }
+    .entry-copy p:last-child { margin-bottom: 0; }
+    .about { display: grid; grid-template-columns: minmax(6rem, 1fr) 3fr; gap: 1rem; padding-block: 1.5rem 3.5rem; border-top: 1px solid var(--rule); }
+    .about h2, .about p { margin: 0; }
+    .about p { max-width: 34rem; color: var(--muted); }
+    .bottom { border-top: 1px solid var(--rule); padding-block: 1.25rem; color: var(--muted); font-size: .88rem; }
+    @media (max-width: 32rem) {
+      .top { min-height: 4.25rem; }
+      .about { grid-template-columns: 1fr; gap: .4rem; }
+    }
+  </style>
+</head>
+<body id="top">
+  <header class="shell top">
+    <a class="brand" href="#top" aria-label="X‑ING 博客首页">X‑ING</a>
+    <nav aria-label="主导航">
+      <a href="#posts">文章</a>
+      <a href="#about">关于</a>
+    </nav>
+  </header>
+  <main class="shell">
+    <section class="hero" aria-labelledby="title">
+      <h1 id="title" aria-label="X‑ING 博客">X<span>–</span>ING</h1>
+      <p>技术笔记、项目记录和零散想法。</p>
+    </section>
+    <section id="posts" class="journal" aria-labelledby="posts-title">
+      <h2 id="posts-title">最新文章</h2>
+      <details class="entry">
+        <summary>
+          <span>
+            <time class="meta" datetime="2026-11-21">2026.11.21</time>
+            <span class="summary-title">博客开张</span>
+            <span class="summary-description">从一篇短文开始，给值得回头翻的东西留个位置。</span>
+          </span>
+          <span class="toggle" aria-hidden="true"></span>
+        </summary>
+        <div class="entry-copy">
+          <p>这篇短文给博客开个头。以后这里可以记下解决过的问题、写代码时的取舍，也可以收录值得再读一遍的资料。</p>
+          <p>先写下过程和结果。下次碰到相似的问题，就有地方可查。</p>
+        </div>
+      </details>
+    </section>
+    <section id="about" class="about" aria-labelledby="about-title">
+      <h2 id="about-title">关于</h2>
+      <p>X‑ING 是一个个人博客，用来整理技术笔记、记录项目进展，也给临时冒出来的想法留个位置。</p>
+    </section>
+  </main>
+  <footer class="shell bottom">
+    <span>X‑ING 博客</span>
+    <a href="#top">返回顶部 ↑</a>
+  </footer>
+</body>
+</html>
