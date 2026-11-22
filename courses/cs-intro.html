@@ -4,30 +4,47 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="数据表示、计算机分层与算法入门。">
-  <meta name="theme-color" content="#f5f7fc">
+  <meta name="theme-color" content="#f5eef2">
   <title>计算机导论 · X-ING</title>
   <link rel="stylesheet" href="../assets/bootstrap.min.css">
   <link rel="stylesheet" href="../assets/portfolio.css">
+  <script src="../assets/search-index.js" defer></script>
+  <script src="../assets/portfolio.js" defer></script>
 </head>
 <body id="top">
   <a class="visually-hidden-focusable" href="#main">跳到正文</a>
-  <header class="site-header border-bottom">
-    <div class="container d-flex align-items-center justify-content-between flex-wrap">
-      <a class="brand" href="../" aria-label="X-ING 学习作品集首页"><span class="brand-mark" aria-hidden="true">X</span><span>X‑ING</span></a>
-      <nav class="nav site-nav" aria-label="主导航"><a class="nav-link" href="../courses.html" aria-current="true">课程档案</a>
+  <header class="site-header">
+    <a class="brand" href="../" aria-label="X-ING 学习作品集首页">X‑ING</a>
+    <div class="nav-pod">
+      <button class="nav-toggle" type="button" aria-controls="site-navigation" aria-expanded="false">导航</button>
+      <nav id="site-navigation" class="nav site-nav" aria-label="主导航"><a class="nav-link" href="../">首页</a>
+<a class="nav-link" href="../courses.html" aria-current="true">课程档案</a>
 <a class="nav-link" href="../plan.html">课程规划</a>
 <a class="nav-link" href="../projects.html">项目</a>
 <a class="nav-link" href="../notes.html">论文笔记</a></nav>
+      <button class="search-trigger" type="button" data-search aria-label="站内搜索"><span class="search-icon" aria-hidden="true"></span></button>
     </div>
+    <button class="theme-toggle" type="button" aria-label="切换深色模式" aria-pressed="false">☾</button>
   </header>
-  <main id="main" class="container">
-<header class="page-intro"><nav aria-label="面包屑"><ol class="breadcrumb mb-3"><li class="breadcrumb-item"><a href="../courses.html">课程档案</a></li><li class="breadcrumb-item active" aria-current="page">计算机导论</li></ol></nav><h1>计算机导论</h1><p>数据表示、计算机分层与算法入门。</p></header><section class="section"><h2 class="mb-3">学习记录</h2><p class="prose">仓库已建课程目录。这里先列出学习主题和自测任务，公开成果待整理。</p></section><section class="section"><h2 class="mb-3">自测任务</h2><p class="prose">把一个整数分别表示成二进制与十六进制，再说明两种写法如何互换。</p></section><section class="section"><h2 class="mb-3">课程资料</h2><p><a href="https://github.com/3315531721/CS-lecture/tree/main/Introduction%20to%20Computer%20Science">查看 GitHub 对应目录 ↗</a></p><p class="minor mb-0">完整资料按私有仓库的访问权限提供。</p></section>
+  <main id="main">
+<header class="page-intro"><div class="container"><nav aria-label="面包屑"><ol class="breadcrumb mb-3"><li class="breadcrumb-item"><a href="../courses.html">课程档案</a></li><li class="breadcrumb-item active" aria-current="page">计算机导论</li></ol></nav><h1>计算机导论</h1><p>数据表示、计算机分层与算法入门。</p></div></header>
+    <div class="container site-content">
+<section class="section"><h2 class="mb-3">学习记录</h2><p class="prose">仓库已建课程目录。这里先列出学习主题和自测任务，公开成果待整理。</p></section><section class="section"><h2 class="mb-3">自测任务</h2><p class="prose">把一个整数分别表示成二进制与十六进制，再说明两种写法如何互换。</p></section><section class="section"><h2 class="mb-3">课程资料</h2><p><a href="https://github.com/3315531721/CS-lecture/tree/main/Introduction%20to%20Computer%20Science">查看 GitHub 对应目录 ↗</a></p><p class="minor mb-0">完整资料按私有仓库的访问权限提供。</p></section>
+    </div>
   </main>
-  <footer class="site-footer border-top">
-    <div class="container d-flex flex-wrap justify-content-between gap-2 py-3 small">
-      <span class="minor">X-ING 学习作品集</span>
-      <a href="https://github.com/3315531721/CS-lecture">GitHub 私有仓库 ↗</a>
+  <a class="back-top" href="#top" aria-label="返回顶部">↑</a>
+  <footer class="site-footer">
+    <div class="container">
+      <p><strong>X‑ING</strong> · <a href="https://github.com/3315531721/CS-lecture">GitHub 私有仓库 ↗</a></p>
+      <p class="small minor">主题设计参考 <a href="https://github.com/mirai-mamori/Sakurairo">Sakurairo</a></p>
     </div>
   </footer>
+  <dialog class="search-dialog" aria-labelledby="search-title">
+    <form method="dialog" class="search-head"><h2 id="search-title">站内搜索</h2><button type="submit" aria-label="关闭搜索">×</button></form>
+    <label class="visually-hidden" for="site-search">查找课程、项目或笔记</label>
+    <input id="site-search" type="search" placeholder="查找课程、项目或笔记" autocomplete="off">
+    <p class="search-status minor" aria-live="polite"></p>
+    <ul class="search-results"></ul>
+  </dialog>
 </body>
 </html>

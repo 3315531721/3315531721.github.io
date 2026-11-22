@@ -4,24 +4,34 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="用 PyTorch 对照 MLP、CNN 和自定义网络。">
-  <meta name="theme-color" content="#f5f7fc">
+  <meta name="theme-color" content="#f5eef2">
   <title>深度学习 · X-ING</title>
   <link rel="stylesheet" href="../assets/bootstrap.min.css">
   <link rel="stylesheet" href="../assets/portfolio.css">
+  <script src="../assets/search-index.js" defer></script>
+  <script src="../assets/portfolio.js" defer></script>
 </head>
 <body id="top">
   <a class="visually-hidden-focusable" href="#main">跳到正文</a>
-  <header class="site-header border-bottom">
-    <div class="container d-flex align-items-center justify-content-between flex-wrap">
-      <a class="brand" href="../" aria-label="X-ING 学习作品集首页"><span class="brand-mark" aria-hidden="true">X</span><span>X‑ING</span></a>
-      <nav class="nav site-nav" aria-label="主导航"><a class="nav-link" href="../courses.html" aria-current="true">课程档案</a>
+  <header class="site-header">
+    <a class="brand" href="../" aria-label="X-ING 学习作品集首页">X‑ING</a>
+    <div class="nav-pod">
+      <button class="nav-toggle" type="button" aria-controls="site-navigation" aria-expanded="false">导航</button>
+      <nav id="site-navigation" class="nav site-nav" aria-label="主导航"><a class="nav-link" href="../">首页</a>
+<a class="nav-link" href="../courses.html" aria-current="true">课程档案</a>
 <a class="nav-link" href="../plan.html">课程规划</a>
 <a class="nav-link" href="../projects.html">项目</a>
 <a class="nav-link" href="../notes.html">论文笔记</a></nav>
+      <button class="search-trigger" type="button" data-search aria-label="站内搜索"><span class="search-icon" aria-hidden="true"></span></button>
     </div>
+    <button class="theme-toggle" type="button" aria-label="切换深色模式" aria-pressed="false">☾</button>
   </header>
-  <main id="main" class="container">
-<header class="page-intro"><nav aria-label="面包屑"><ol class="breadcrumb mb-3"><li class="breadcrumb-item"><a href="../courses.html">课程档案</a></li><li class="breadcrumb-item active" aria-current="page">深度学习</li></ol></nav><h1>深度学习</h1><p>用 PyTorch 对照 MLP、CNN 和自定义网络。</p></header><section class="section" id="work"><h2 class="mb-3">成果与笔记</h2><div class="prose"><p>本地 MNIST 实验中，单层卷积提取局部特征，2×2 池化把特征图从 28×28 缩成 14×14，分类层输出 10 个分数。</p>
+  <main id="main">
+<header class="page-intro"><div class="container"><nav aria-label="面包屑"><ol class="breadcrumb mb-3"><li class="breadcrumb-item"><a href="../courses.html">课程档案</a></li><li class="breadcrumb-item active" aria-current="page">深度学习</li></ol></nav><h1>深度学习</h1><p>用 PyTorch 对照 MLP、CNN 和自定义网络。</p></div></header>
+    <div class="container site-content">
+<section class="section" id="work"><h2 class="mb-3">成果与笔记</h2>
+        <figure class="prose mnist-figure"><img src="../assets/mnist-samples.png" width="542" height="102" alt="MNIST 样本中手写的 7、2、1、0、4">
+        <figcaption><a href="https://keras.io/api/datasets/mnist/">MNIST，LeCun 与 Cortes</a> · 已着色 · <a href="https://creativecommons.org/licenses/by-sa/3.0/">CC BY-SA 3.0</a></figcaption></figure><div class="prose"><p>本地 MNIST 实验中，单层卷积提取局部特征，2×2 池化把特征图从 28×28 缩成 14×14，分类层输出 10 个分数。</p>
       <details open><summary>Python · MNIST 模型定义</summary><pre><code>def make_cnn():
     return nn.Sequential(
         nn.Conv2d(1, 8, 3, padding=1),
@@ -40,12 +50,21 @@
             <tr><th scope="row">自定义 CNN</th><td>105,866</td><td>98.53%</td><td>98.50%</td></tr>
           </tbody>
         </table></div></div></section><section class="section"><h2 class="mb-3">自测任务</h2><p class="prose">固定数据划分和训练轮数后做结构对照，最后使用独立测试集报告结果。</p></section><section class="section"><h2 class="mb-3">课程资料</h2><p><a href="https://github.com/3315531721/CS-lecture/tree/main/Deep%20Learning">查看 GitHub 对应目录 ↗</a></p><p class="minor mb-0">完整资料按私有仓库的访问权限提供。</p></section>
+    </div>
   </main>
-  <footer class="site-footer border-top">
-    <div class="container d-flex flex-wrap justify-content-between gap-2 py-3 small">
-      <span class="minor">X-ING 学习作品集</span>
-      <a href="https://github.com/3315531721/CS-lecture">GitHub 私有仓库 ↗</a>
+  <a class="back-top" href="#top" aria-label="返回顶部">↑</a>
+  <footer class="site-footer">
+    <div class="container">
+      <p><strong>X‑ING</strong> · <a href="https://github.com/3315531721/CS-lecture">GitHub 私有仓库 ↗</a></p>
+      <p class="small minor">主题设计参考 <a href="https://github.com/mirai-mamori/Sakurairo">Sakurairo</a></p>
     </div>
   </footer>
+  <dialog class="search-dialog" aria-labelledby="search-title">
+    <form method="dialog" class="search-head"><h2 id="search-title">站内搜索</h2><button type="submit" aria-label="关闭搜索">×</button></form>
+    <label class="visually-hidden" for="site-search">查找课程、项目或笔记</label>
+    <input id="site-search" type="search" placeholder="查找课程、项目或笔记" autocomplete="off">
+    <p class="search-status minor" aria-live="polite"></p>
+    <ul class="search-results"></ul>
+  </dialog>
 </body>
 </html>

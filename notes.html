@@ -4,24 +4,32 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Transformer、长序列注意力、FlashAttention 与 GQA 的阅读记录。">
-  <meta name="theme-color" content="#f5f7fc">
+  <meta name="theme-color" content="#f5eef2">
   <title>论文笔记 · X-ING</title>
   <link rel="stylesheet" href="./assets/bootstrap.min.css">
   <link rel="stylesheet" href="./assets/portfolio.css">
+  <script src="./assets/search-index.js" defer></script>
+  <script src="./assets/portfolio.js" defer></script>
 </head>
 <body id="top">
   <a class="visually-hidden-focusable" href="#main">跳到正文</a>
-  <header class="site-header border-bottom">
-    <div class="container d-flex align-items-center justify-content-between flex-wrap">
-      <a class="brand" href="./" aria-label="X-ING 学习作品集首页"><span class="brand-mark" aria-hidden="true">X</span><span>X‑ING</span></a>
-      <nav class="nav site-nav" aria-label="主导航"><a class="nav-link" href="./courses.html">课程档案</a>
+  <header class="site-header">
+    <a class="brand" href="./" aria-label="X-ING 学习作品集首页">X‑ING</a>
+    <div class="nav-pod">
+      <button class="nav-toggle" type="button" aria-controls="site-navigation" aria-expanded="false">导航</button>
+      <nav id="site-navigation" class="nav site-nav" aria-label="主导航"><a class="nav-link" href="./">首页</a>
+<a class="nav-link" href="./courses.html">课程档案</a>
 <a class="nav-link" href="./plan.html">课程规划</a>
 <a class="nav-link" href="./projects.html">项目</a>
 <a class="nav-link" href="./notes.html" aria-current="page">论文笔记</a></nav>
+      <button class="search-trigger" type="button" data-search aria-label="站内搜索"><span class="search-icon" aria-hidden="true"></span></button>
     </div>
+    <button class="theme-toggle" type="button" aria-label="切换深色模式" aria-pressed="false">☾</button>
   </header>
-  <main id="main" class="container">
-<header class="page-intro"><h1>论文笔记</h1><p>把读过的内容按研究问题、方法和适用条件整理。这组笔记来自《Transformer 及其变体》课程报告。</p></header><section class="section" id="transformer"><h2 class="mb-3">Transformer 的结构与长序列</h2>
+  <main id="main">
+<header class="page-intro"><div class="container"><h1>论文笔记</h1><p>把读过的内容按研究问题、方法和适用条件整理。这组笔记来自《Transformer 及其变体》课程报告。</p></div></header>
+    <div class="container site-content">
+<section class="section" id="transformer"><h2 class="mb-3">Transformer 的结构与长序列</h2>
       <div class="prose">
       <p><strong>问题。</strong>自注意力让不同位置直接交互，也让训练更容易并行；标准全局注意力的交互量随序列长度平方增长。</p>
       <p><strong>读到的区别。</strong>Transformer‑XL 在片段间保留历史状态。Longformer 限制大多数位置只看附近窗口，并保留少量全局位置。这两种方案分别改变可用的历史和允许发生的交互。</p>
@@ -41,12 +49,21 @@
         <li><a href="https://arxiv.org/abs/2305.13245">GQA ↗</a></li>
       </ul></div>
     </section>
+    </div>
   </main>
-  <footer class="site-footer border-top">
-    <div class="container d-flex flex-wrap justify-content-between gap-2 py-3 small">
-      <span class="minor">X-ING 学习作品集</span>
-      <a href="https://github.com/3315531721/CS-lecture">GitHub 私有仓库 ↗</a>
+  <a class="back-top" href="#top" aria-label="返回顶部">↑</a>
+  <footer class="site-footer">
+    <div class="container">
+      <p><strong>X‑ING</strong> · <a href="https://github.com/3315531721/CS-lecture">GitHub 私有仓库 ↗</a></p>
+      <p class="small minor">主题设计参考 <a href="https://github.com/mirai-mamori/Sakurairo">Sakurairo</a></p>
     </div>
   </footer>
+  <dialog class="search-dialog" aria-labelledby="search-title">
+    <form method="dialog" class="search-head"><h2 id="search-title">站内搜索</h2><button type="submit" aria-label="关闭搜索">×</button></form>
+    <label class="visually-hidden" for="site-search">查找课程、项目或笔记</label>
+    <input id="site-search" type="search" placeholder="查找课程、项目或笔记" autocomplete="off">
+    <p class="search-status minor" aria-live="polite"></p>
+    <ul class="search-results"></ul>
+  </dialog>
 </body>
 </html>

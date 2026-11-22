@@ -1,7 +1,10 @@
 """Regenerate the portfolio from its curated public content using Python 3."""
 from html import escape
+from json import dumps
 from pathlib import Path
 from urllib.parse import quote
+
+from content import read_content
 
 ROOT = Path(__file__).resolve().parents[1]
 GITHUB = "https://github.com/3315531721/CS-lecture"
@@ -31,6 +34,7 @@ GROUPS = {
     )),
 }
 COURSES = {row[0]: row[1:] for _, rows in GROUPS.values() for row in rows}
+CONTENT = read_content(COURSES)
 
 STATUS = {
     "english": "仓库含听读材料；网页展示学习任务。",
@@ -108,18 +112,20 @@ def code_box(key, context):
 
 def page_intro(title, description, parent=None):
     trail = (f'<nav aria-label="面包屑"><ol class="breadcrumb mb-3"><li class="breadcrumb-item"><a href="{parent[1]}">{parent[0]}</a></li><li class="breadcrumb-item active" aria-current="page">{title}</li></ol></nav>' if parent else "")
-    return f'<header class="page-intro">{trail}<h1>{title}</h1><p>{description}</p></header>'
+    return f'<header class="page-intro"><div class="container">{trail}<h1>{title}</h1><p>{description}</p></div></header>'
 
 
-def write(path, title, description, active, body):
+def write(path, title, description, active, body, masthead):
     rel = "../" if "/" in path else "./"
-    nav_items = (("课程档案", "courses.html"), ("课程规划", "plan.html"), ("项目", "projects.html"), ("论文笔记", "notes.html"))
+    home_class = ' class="iro-home"' if path == "index.html" else ""
+    nav_items = (("首页", "index.html"), ("课程档案", "courses.html"), ("课程规划", "plan.html"), ("项目", "projects.html"), ("论文笔记", "notes.html"))
     nav = []
     for name, target in nav_items:
         current = ' aria-current="page"' if path == target else ''
         if active == target and path != target:
             current = ' aria-current="true"'
-        nav.append(f'<a class="nav-link" href="{rel}{target}"{current}>{name}</a>')
+        url = rel if target == "index.html" else rel + target
+        nav.append(f'<a class="nav-link" href="{url}"{current}>{name}</a>')
     nav_markup = "\n".join(nav)
     html = f"""<!doctype html>
 <html lang="zh-CN">
@@ -127,28 +133,44 @@ def write(path, title, description, active, body):
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="{escape(description, quote=True)}">
-  <meta name="theme-color" content="#f5f7fc">
+  <meta name="theme-color" content="#f5eef2">
   <title>{title} · X-ING</title>
   <link rel="stylesheet" href="{rel}assets/bootstrap.min.css">
   <link rel="stylesheet" href="{rel}assets/portfolio.css">
+  <script src="{rel}assets/search-index.js" defer></script>
+  <script src="{rel}assets/portfolio.js" defer></script>
 </head>
-<body id="top">
+<body id="top"{home_class}>
   <a class="visually-hidden-focusable" href="#main">跳到正文</a>
-  <header class="site-header border-bottom">
-    <div class="container d-flex align-items-center justify-content-between flex-wrap">
-      <a class="brand" href="{rel}" aria-label="X-ING 学习作品集首页"><span class="brand-mark" aria-hidden="true">X</span><span>X‑ING</span></a>
-      <nav class="nav site-nav" aria-label="主导航">{nav_markup}</nav>
+  <header class="site-header">
+    <a class="brand" href="{rel}" aria-label="X-ING 学习作品集首页">X‑ING</a>
+    <div class="nav-pod">
+      <button class="nav-toggle" type="button" aria-controls="site-navigation" aria-expanded="false">导航</button>
+      <nav id="site-navigation" class="nav site-nav" aria-label="主导航">{nav_markup}</nav>
+      <button class="search-trigger" type="button" data-search aria-label="站内搜索"><span class="search-icon" aria-hidden="true"></span></button>
     </div>
+    <button class="theme-toggle" type="button" aria-label="切换深色模式" aria-pressed="false">☾</button>
   </header>
-  <main id="main" class="container">
+  <main id="main">
+{masthead}
+    <div class="container site-content">
 {body}
+    </div>
   </main>
-  <footer class="site-footer border-top">
-    <div class="container d-flex flex-wrap justify-content-between gap-2 py-3 small">
-      <span class="minor">X-ING 学习作品集</span>
-      <a href="{GITHUB}">GitHub 私有仓库 ↗</a>
+  <a class="back-top" href="#top" aria-label="返回顶部">↑</a>
+  <footer class="site-footer">
+    <div class="container">
+      <p><strong>X‑ING</strong> · <a href="{GITHUB}">GitHub 私有仓库 ↗</a></p>
+      <p class="small minor">主题设计参考 <a href="https://github.com/mirai-mamori/Sakurairo">Sakurairo</a></p>
     </div>
   </footer>
+  <dialog class="search-dialog" aria-labelledby="search-title">
+    <form method="dialog" class="search-head"><h2 id="search-title">站内搜索</h2><button type="submit" aria-label="关闭搜索">×</button></form>
+    <label class="visually-hidden" for="site-search">查找课程、项目或笔记</label>
+    <input id="site-search" type="search" placeholder="查找课程、项目或笔记" autocomplete="off">
+    <p class="search-status minor" aria-live="polite"></p>
+    <ul class="search-results"></ul>
+  </dialog>
 </body>
 </html>
 """
@@ -165,93 +187,70 @@ def course_link(slug):
     return f'<a href="{course_url(slug)}">{COURSES[slug][0]}</a>'
 
 
+def course_text(slug, field, default):
+    return CONTENT["courses"].get(slug, {}).get(field) or default
+
+
+def additions(category):
+    entries = [entry for entry in CONTENT["entries"] if entry["category"] == category]
+    if not entries:
+        return ""
+    items = "".join(
+        f'<article><h3>{escape(entry["title"])}</h3>'
+        + "".join(f'<p>{escape(paragraph.strip())}</p>' for paragraph in entry["body"].splitlines() if paragraph.strip())
+        + '</article>'
+        for entry in entries
+    )
+    return section("补充记录", f'<div class="prose">{items}</div>', "more")
+
+
 def build_home():
-    intro = """
-    <section class="hero" id="about">
-      <div class="hero-grid">
-        <div class="hero-copy">
-          <h1>学习作品集</h1>
-          <p>计算机课程、实验代码、项目进展和论文阅读。</p>
-          <div class="hero-actions d-flex flex-wrap gap-2">
-            <a href="courses.html" class="btn btn-primary">浏览课程档案</a>
-            <a href="plan.html" class="btn btn-outline-dark">查看课程规划</a>
-          </div>
-        </div>
-        <div class="experiment">
-          <div class="experiment-head">
-            <h2>MNIST 手写数字识别</h2>
-            <span class="experiment-label">深度学习</span>
-          </div>
-          <figure class="experiment-samples">
-            <img src="assets/mnist-samples.png" width="542" height="102" alt="MNIST 样本中手写的 7、2、1、0、4">
-            <figcaption><a href="https://keras.io/api/datasets/mnist/">MNIST，LeCun 与 Cortes</a> · 已着色 · <a href="https://creativecommons.org/licenses/by-sa/3.0/">CC BY-SA 3.0</a></figcaption>
-          </figure>
-          <div class="experiment-result">
-            <div><strong>98.50%</strong><p>自定义 CNN 测试准确率</p></div>
-            <a href="courses/deep-learning.html#work">代码与结果 <span aria-hidden="true">↗</span></a>
-          </div>
+    cover = f"""
+    <section class="home-cover" id="about" aria-labelledby="home-title">
+      <div class="cover-intro">
+        <div class="cover-avatar" aria-hidden="true">X</div>
+        <h1 id="home-title">{escape(CONTENT["cover_title"])}</h1>
+        <div class="cover-signature">
+          <p>{escape(CONTENT["signature"])}</p>
+          <div class="cover-links"><a href="courses.html">课程档案</a><a href="plan.html">课程规划</a><a href="{GITHUB}">GitHub</a></div>
         </div>
       </div>
+      <a class="cover-down" href="#courses" aria-label="向下浏览课程与作品"><span aria-hidden="true"></span></a>
+      <div class="cover-wave" aria-hidden="true"></div>
     </section>"""
-    catalog = """
-    <section id="courses" class="home-section" aria-labelledby="home-courses">
-      <div class="section-heading">
-        <h2 id="home-courses">课程成果</h2>
-        <a href="courses.html">全部 14 门课程 <span aria-hidden="true">→</span></a>
-      </div>
-      <div class="row row-cols-1 row-cols-md-2 g-3">
-        <div class="col"><a class="work-card" href="courses/android.html#work">
-          <span class="work-meta">移动应用开发 · Java</span>
-          <strong>用 Room 查询本地新闻</strong>
-          <span class="work-detail">标题搜索、排序与列表和详情的衔接</span>
-          <span class="work-arrow" aria-hidden="true">↗</span>
-        </a></div>
-        <div class="col"><a class="work-card" href="courses/data-science.html#work">
-          <span class="work-meta">数据科学 · Python</span>
-          <strong>CPCS2018 数据审计</strong>
-          <span class="work-detail">波形文件与标签的对齐检查</span>
-          <span class="work-arrow" aria-hidden="true">↗</span>
-        </a></div>
-      </div>
-    </section>"""
-    plan = """
-    <section class="home-section home-plan" id="plan" aria-labelledby="home-plan">
-      <div class="section-heading">
-        <h2 id="home-plan">课程规划</h2>
-        <a href="plan.html">阶段目标与练习 <span aria-hidden="true">→</span></a>
-      </div>
-      <ol class="plan-preview">
-        <li><strong>基础</strong><span>C 语言与线性代数</span></li>
-        <li><strong>系统</strong><span>算法、操作系统与数据库</span></li>
-        <li><strong>应用</strong><span>Android 与数据分析</span></li>
-        <li><strong>实验</strong><span>模型复现与论文阅读</span></li>
-      </ol>
-    </section>"""
-    related = """
-    <div id="posts" class="home-section home-secondary">
-      <section aria-labelledby="home-projects">
-        <div class="section-heading"><h2 id="home-projects">项目</h2><a href="projects.html">全部项目 <span aria-hidden="true">→</span></a></div>
-        <ul class="home-links">
-          <li><a href="projects.html#studyflow"><strong>学程 StudyFlow</strong><span>Android 学习管理原型</span></a></li>
-          <li><a href="projects.html#data-project"><strong>CPCS2018 数据分析</strong><span>信号数据分析与建模流程</span></a></li>
-        </ul>
-      </section>
-      <section aria-labelledby="home-notes">
-        <div class="section-heading"><h2 id="home-notes">论文笔记</h2><a href="notes.html">全部笔记 <span aria-hidden="true">→</span></a></div>
-        <ul class="home-links">
-          <li><a href="notes.html#transformer"><strong>Transformer 与长序列</strong><span>比较注意力结构与跨片段记忆</span></a></li>
-          <li><a href="notes.html#efficient-attention"><strong>FlashAttention 与 GQA</strong><span>理解显存访问和 KV 缓存</span></a></li>
-        </ul>
-      </section>
-    </div>"""
-    write("index.html", "学习作品集", "X-ING 的课程成果、项目、论文笔记与课程规划。", "", intro + catalog + plan + related)
+    showcases = [
+        ("课程档案", "14 门计算机课程", "courses.html", "course"),
+        ("课程规划", "基础 · 系统 · 应用 · 实验", "plan.html", "plan"),
+        ("项目", "StudyFlow 与数据分析", "projects.html", "project"),
+    ]
+    display = "".join(
+        f'<a class="showcase-card art-{art}" href="{url}"><div><strong>{title}</strong><span>{subtitle}</span></div></a>'
+        for title, subtitle, url, art in showcases
+    )
+    work = [
+        ("MNIST 手写数字识别", "深度学习 · Python", "对照 MLP、CNN 与自定义网络。自定义 CNN 的测试准确率为 98.50%。", "courses/deep-learning.html#work", "mnist"),
+        ("用 Room 查询本地新闻", "移动应用开发 · Java", "标题搜索、发布时间排序，以及列表到详情的衔接。", "courses/android.html#work", "android"),
+        ("CPCS2018 数据审计", "数据科学 · Python", "从信号文件与标签的对齐出发，检查异常和重复记录。", "courses/data-science.html#work", "data"),
+        ("Transformer 及其变体", "论文笔记", "从长序列注意力读到 FlashAttention 与 GQA，整理三种常见的计算瓶颈。", "notes.html", "notes"),
+    ]
+    articles = "".join(
+        f'<article class="iro-post"><a class="post-art art-{art}" href="{url}" aria-label="{title}">'
+        + ('<img src="assets/mnist-samples.png" width="542" height="102" alt="">' if art == "mnist" else "")
+        + f'</a><div class="post-copy"><p class="post-meta">{kind}</p><h3><a href="{url}">{title}</a></h3>'
+        + f'<p class="minor">{summary}</p><a class="post-more" href="{url}" aria-label="阅读{title}">阅读全文 →</a></div></article>'
+        for title, kind, summary, url, art in work
+    )
+    catalog = section("学习导航", f'<div class="showcase">{display}</div>', "courses")
+    related = section("学习记录", f'<div class="post-list">{articles}</div>', "posts")
+    plan = section("学习路线", '<div class="plan-link"><p>从 C 语言和线性代数起步，经过系统与应用课，再用模型实验和论文阅读串联。</p><a href="plan.html">查看课程规划 →</a></div>', "plan")
+    write("index.html", "学习作品集", "X-ING 的课程成果、项目、论文笔记与课程规划。", "", catalog + related + plan, cover)
 
 
 def build_catalog():
     blocks = []
     for key, (name, rows) in GROUPS.items():
         tiles = ''.join(
-            f'<div class="col"><article class="course-row"><h3><a href="{course_url(slug)}">{title} →</a></h3><p>{intro}</p></article></div>'
+            f'<div class="col"><article class="course-row"><h3><a href="{course_url(slug)}">{title} →</a></h3><p>{escape(course_text(slug, "intro", intro))}</p></article></div>'
             for slug, title, _, intro, _ in rows
         )
         blocks.append(section(name, f'<div class="row row-cols-1 row-cols-md-2 g-3">{tiles}</div>', key))
@@ -263,7 +262,8 @@ def build_catalog():
         card("CMU 15-445/645 · 数据库系统", "存储、索引、查询执行和事务恢复。", CMU),
     )), "extra")
     write("courses.html", "课程档案", "14 门课程的独立页面，包含学习要点、可浏览成果和对应的课程仓库。",
-          "courses.html", page_intro("课程档案", "查看 14 门课程。实验代码和摘要可以直接阅读，完整资料由 GitHub 管理。") + directory + ''.join(blocks) + extra)
+          "courses.html", directory + ''.join(blocks) + extra,
+          page_intro("课程档案", "查看 14 门课程。实验代码和摘要可以直接阅读，完整资料由 GitHub 管理。"))
 
 
 def build_courses():
@@ -272,7 +272,10 @@ def build_courses():
         "databases": '<div class="prose"><p>课外用 CMU 的课程补上数据库执行层。从记录的存储形式追到索引访问，再比较不同查询计划需要读多少数据。</p><a href="' + CMU + '">CMU 15-445/645 课程资料 ↗</a></div>',
         "android": code_box("android", "移动开发课程包含 Activity 间传参和广播实验。本地 Room 新闻练习另外展示标题查找、按发布时间排序以及列表与详情的衔接。"),
         "data-science": code_box("data-science", "CPCS2018 信号数据分析先按样本标识核对文件与标签，再检查波形长度、缺失、异常和重复记录。下面把数据审计中的对齐检查整理成一段可读示例。"),
-        "deep-learning": code_box("deep-learning", "本地 MNIST 实验中，单层卷积提取局部特征，2×2 池化把特征图从 28×28 缩成 14×14，分类层输出 10 个分数。") + """
+        "deep-learning": """
+        <figure class="prose mnist-figure"><img src="../assets/mnist-samples.png" width="542" height="102" alt="MNIST 样本中手写的 7、2、1、0、4">
+        <figcaption><a href="https://keras.io/api/datasets/mnist/">MNIST，LeCun 与 Cortes</a> · 已着色 · <a href="https://creativecommons.org/licenses/by-sa/3.0/">CC BY-SA 3.0</a></figcaption></figure>"""
+        + code_box("deep-learning", "本地 MNIST 实验中，单层卷积提取局部特征，2×2 池化把特征图从 28×28 缩成 14×14，分类层输出 10 个分数。") + """
         <div class="prose"><h3>一次对照实验的结果</h3>
         <p>三个模型使用同一训练、验证和测试划分。下面是本地实验记录中的第 5 轮结果。</p>
         <div class="table-responsive"><table class="table table-sm align-middle">
@@ -285,33 +288,39 @@ def build_courses():
         </table></div></div>""",
     }
     for slug, (title, directory, intro, task) in COURSES.items():
-        overview = page_intro(title, intro, ("课程档案", "../courses.html"))
+        intro = course_text(slug, "intro", intro)
+        task = course_text(slug, "task", task)
+        masthead = page_intro(title, escape(intro), ("课程档案", "../courses.html"))
+        overview = ""
         work = exhibit.get(slug)
         if work:
             overview += section("成果与笔记", work, "work")
         else:
             overview += section("学习记录", '<p class="prose">' + STATUS.get(slug, "仓库已建课程目录。这里先列出学习主题和自测任务，公开成果待整理。") + '</p>')
-        overview += section("自测任务", f'<p class="prose">{task}</p>')
+        note = course_text(slug, "note", "")
+        if note:
+            overview += section("补充笔记", '<div class="prose">' + "".join(f'<p>{escape(line.strip())}</p>' for line in note.splitlines() if line.strip()) + '</div>')
+        overview += section("自测任务", f'<p class="prose">{escape(task)}</p>')
         source = f'<p><a href="{GITHUB}/tree/main/{quote(directory)}">查看 GitHub 对应目录 ↗</a></p><p class="minor mb-0">完整资料按私有仓库的访问权限提供。</p>'
         overview += section("课程资料", source)
-        write(course_url(slug), title, intro, "courses.html", overview)
+        write(course_url(slug), title, intro, "courses.html", overview, masthead)
 
 
 def build_plan():
     stage_items = ''.join(
         '<li><h3 class="h5">' + title + '</h3><div class="d-flex gap-2 flex-wrap">' +
-        ' <span aria-hidden="true">·</span> '.join(course_link(s) for s in keys) + f'</div><p>{desc}</p></li>'
+        ' <span aria-hidden="true">·</span> '.join(course_link(s) for s in keys) + f'</div><p>{escape(CONTENT["plan"].get(title, desc))}</p></li>'
         for title, keys, desc in PLAN
     )
-    body = page_intro("课程规划", "按现有课程目录整理的学习路线。每个阶段都配一个可以检查的成果。")
-    body += section("学习顺序", f'<ol class="plan-list prose">{stage_items}</ol>')
+    masthead = page_intro("课程规划", "按现有课程目录整理的学习路线。每个阶段都配一个可以检查的成果。")
+    body = section("学习顺序", f'<ol class="plan-list prose">{stage_items}</ol>')
     body += section("并行复习", '<p class="prose">大学物理、数字电子与高级英语可以随课堂进度安排。等程序设计与系统课打好基础后，再系统学习南大操作系统与 CMU 数据库公开课。</p><a href="courses.html#extra">查看公开课 →</a>')
-    write("plan.html", "课程规划", "X-ING 的分阶段课程学习路线与阶段成果。", "plan.html", body)
+    write("plan.html", "课程规划", "X-ING 的分阶段课程学习路线与阶段成果。", "plan.html", body, masthead)
 
 
 def build_projects():
-    body = page_intro("项目", "记录现有原型、实现片段和可复核的实验过程。")
-    body += section("学程 StudyFlow", """
+    masthead = page_intro("项目", "记录现有原型、实现片段和可复核的实验过程。")
+    body = section("学程 StudyFlow", """
       <div class="prose"><p class="eyebrow">Android · 阶段一原型</p>
       <p>用 Kotlin、Jetpack Compose 和 StateFlow 做学习管理原型。作业、练习、考试和设置四个页面使用本地样例数据。</p>
       <p>下一步把内存中的作业状态迁移到 Room，并补上编辑、删除和错题记录。</p></div>
@@ -321,12 +330,12 @@ def build_projects():
       <p>将信号读取、标签对齐、数据质检与模型对照串成一条流程。重点是让数据划分和结果能被人复核。</p>
       <a href="courses/data-science.html#work">查看数据审计与代码 →</a></div>
     """, "data-project")
-    write("projects.html", "项目", "StudyFlow 学习管理原型和 CPCS2018 数据分析。", "projects.html", body)
+    write("projects.html", "项目", "StudyFlow 学习管理原型和 CPCS2018 数据分析。", "projects.html", body + additions("项目"), masthead)
 
 
 def build_notes():
-    body = page_intro("论文笔记", "把读过的内容按研究问题、方法和适用条件整理。这组笔记来自《Transformer 及其变体》课程报告。")
-    body += section("Transformer 的结构与长序列", """
+    masthead = page_intro("论文笔记", "把读过的内容按研究问题、方法和适用条件整理。这组笔记来自《Transformer 及其变体》课程报告。")
+    body = section("Transformer 的结构与长序列", """
       <div class="prose">
       <p><strong>问题。</strong>自注意力让不同位置直接交互，也让训练更容易并行；标准全局注意力的交互量随序列长度平方增长。</p>
       <p><strong>读到的区别。</strong>Transformer‑XL 在片段间保留历史状态。Longformer 限制大多数位置只看附近窗口，并保留少量全局位置。这两种方案分别改变可用的历史和允许发生的交互。</p>
@@ -347,12 +356,31 @@ def build_notes():
         <li><a href="https://arxiv.org/abs/2305.13245">GQA ↗</a></li>
       </ul></div>
     """, "efficient-attention")
-    write("notes.html", "论文笔记", "Transformer、长序列注意力、FlashAttention 与 GQA 的阅读记录。", "notes.html", body)
+    write("notes.html", "论文笔记", "Transformer、长序列注意力、FlashAttention 与 GQA 的阅读记录。", "notes.html", body + additions("论文笔记"), masthead)
 
 
-build_home()
-build_catalog()
-build_courses()
-build_plan()
-build_projects()
-build_notes()
+def build_search():
+    records = [(name, course_text(slug, "intro", intro), course_url(slug)) for slug, (name, _, intro, _) in COURSES.items()]
+    records.extend([
+        ("课程档案", "计算机课程与课外拓展", "courses.html"),
+        ("课程规划", "基础、系统、应用与实验", "plan.html"),
+        ("学程 StudyFlow", "Android 学习管理原型", "projects.html#studyflow"),
+        ("CPCS2018 数据分析", "数据审计、建模与复核", "projects.html#data-project"),
+        ("MNIST 手写数字识别", "PyTorch · MLP 与 CNN 模型对照", "courses/deep-learning.html#work"),
+        ("Transformer 与长序列", "论文笔记", "notes.html#transformer"),
+        ("FlashAttention 与 GQA", "显存访问、推理与 KV 缓存", "notes.html#efficient-attention"),
+    ])
+    for entry in CONTENT["entries"]:
+        href = "projects.html#more" if entry["category"] == "项目" else "notes.html#more"
+        records.append((entry["title"], entry["category"], href))
+    (ROOT / "assets/search-index.js").write_text("window.xingSearchIndex = " + dumps(records, ensure_ascii=False) + ";\n", encoding="utf-8")
+
+
+if __name__ == "__main__":
+    build_home()
+    build_catalog()
+    build_courses()
+    build_plan()
+    build_projects()
+    build_notes()
+    build_search()

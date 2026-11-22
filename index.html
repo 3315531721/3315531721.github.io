@@ -4,104 +4,59 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="X-ING 的课程成果、项目、论文笔记与课程规划。">
-  <meta name="theme-color" content="#f5f7fc">
+  <meta name="theme-color" content="#f5eef2">
   <title>学习作品集 · X-ING</title>
   <link rel="stylesheet" href="./assets/bootstrap.min.css">
   <link rel="stylesheet" href="./assets/portfolio.css">
+  <script src="./assets/search-index.js" defer></script>
+  <script src="./assets/portfolio.js" defer></script>
 </head>
-<body id="top">
+<body id="top" class="iro-home">
   <a class="visually-hidden-focusable" href="#main">跳到正文</a>
-  <header class="site-header border-bottom">
-    <div class="container d-flex align-items-center justify-content-between flex-wrap">
-      <a class="brand" href="./" aria-label="X-ING 学习作品集首页"><span class="brand-mark" aria-hidden="true">X</span><span>X‑ING</span></a>
-      <nav class="nav site-nav" aria-label="主导航"><a class="nav-link" href="./courses.html">课程档案</a>
+  <header class="site-header">
+    <a class="brand" href="./" aria-label="X-ING 学习作品集首页">X‑ING</a>
+    <div class="nav-pod">
+      <button class="nav-toggle" type="button" aria-controls="site-navigation" aria-expanded="false">导航</button>
+      <nav id="site-navigation" class="nav site-nav" aria-label="主导航"><a class="nav-link" href="./" aria-current="page">首页</a>
+<a class="nav-link" href="./courses.html">课程档案</a>
 <a class="nav-link" href="./plan.html">课程规划</a>
 <a class="nav-link" href="./projects.html">项目</a>
 <a class="nav-link" href="./notes.html">论文笔记</a></nav>
+      <button class="search-trigger" type="button" data-search aria-label="站内搜索"><span class="search-icon" aria-hidden="true"></span></button>
     </div>
+    <button class="theme-toggle" type="button" aria-label="切换深色模式" aria-pressed="false">☾</button>
   </header>
-  <main id="main" class="container">
+  <main id="main">
 
-    <section class="hero" id="about">
-      <div class="hero-grid">
-        <div class="hero-copy">
-          <h1>学习作品集</h1>
-          <p>计算机课程、实验代码、项目进展和论文阅读。</p>
-          <div class="hero-actions d-flex flex-wrap gap-2">
-            <a href="courses.html" class="btn btn-primary">浏览课程档案</a>
-            <a href="plan.html" class="btn btn-outline-dark">查看课程规划</a>
-          </div>
-        </div>
-        <div class="experiment">
-          <div class="experiment-head">
-            <h2>MNIST 手写数字识别</h2>
-            <span class="experiment-label">深度学习</span>
-          </div>
-          <figure class="experiment-samples">
-            <img src="assets/mnist-samples.png" width="542" height="102" alt="MNIST 样本中手写的 7、2、1、0、4">
-            <figcaption><a href="https://keras.io/api/datasets/mnist/">MNIST，LeCun 与 Cortes</a> · 已着色 · <a href="https://creativecommons.org/licenses/by-sa/3.0/">CC BY-SA 3.0</a></figcaption>
-          </figure>
-          <div class="experiment-result">
-            <div><strong>98.50%</strong><p>自定义 CNN 测试准确率</p></div>
-            <a href="courses/deep-learning.html#work">代码与结果 <span aria-hidden="true">↗</span></a>
-          </div>
+    <section class="home-cover" id="about" aria-labelledby="home-title">
+      <div class="cover-intro">
+        <div class="cover-avatar" aria-hidden="true">X</div>
+        <h1 id="home-title">X‑ING 学习作品集</h1>
+        <div class="cover-signature">
+          <p>计算机课程、实验代码、项目进展与论文笔记。</p>
+          <div class="cover-links"><a href="courses.html">课程档案</a><a href="plan.html">课程规划</a><a href="https://github.com/3315531721/CS-lecture">GitHub</a></div>
         </div>
       </div>
+      <a class="cover-down" href="#courses" aria-label="向下浏览课程与作品"><span aria-hidden="true"></span></a>
+      <div class="cover-wave" aria-hidden="true"></div>
     </section>
-    <section id="courses" class="home-section" aria-labelledby="home-courses">
-      <div class="section-heading">
-        <h2 id="home-courses">课程成果</h2>
-        <a href="courses.html">全部 14 门课程 <span aria-hidden="true">→</span></a>
-      </div>
-      <div class="row row-cols-1 row-cols-md-2 g-3">
-        <div class="col"><a class="work-card" href="courses/android.html#work">
-          <span class="work-meta">移动应用开发 · Java</span>
-          <strong>用 Room 查询本地新闻</strong>
-          <span class="work-detail">标题搜索、排序与列表和详情的衔接</span>
-          <span class="work-arrow" aria-hidden="true">↗</span>
-        </a></div>
-        <div class="col"><a class="work-card" href="courses/data-science.html#work">
-          <span class="work-meta">数据科学 · Python</span>
-          <strong>CPCS2018 数据审计</strong>
-          <span class="work-detail">波形文件与标签的对齐检查</span>
-          <span class="work-arrow" aria-hidden="true">↗</span>
-        </a></div>
-      </div>
-    </section>
-    <section class="home-section home-plan" id="plan" aria-labelledby="home-plan">
-      <div class="section-heading">
-        <h2 id="home-plan">课程规划</h2>
-        <a href="plan.html">阶段目标与练习 <span aria-hidden="true">→</span></a>
-      </div>
-      <ol class="plan-preview">
-        <li><strong>基础</strong><span>C 语言与线性代数</span></li>
-        <li><strong>系统</strong><span>算法、操作系统与数据库</span></li>
-        <li><strong>应用</strong><span>Android 与数据分析</span></li>
-        <li><strong>实验</strong><span>模型复现与论文阅读</span></li>
-      </ol>
-    </section>
-    <div id="posts" class="home-section home-secondary">
-      <section aria-labelledby="home-projects">
-        <div class="section-heading"><h2 id="home-projects">项目</h2><a href="projects.html">全部项目 <span aria-hidden="true">→</span></a></div>
-        <ul class="home-links">
-          <li><a href="projects.html#studyflow"><strong>学程 StudyFlow</strong><span>Android 学习管理原型</span></a></li>
-          <li><a href="projects.html#data-project"><strong>CPCS2018 数据分析</strong><span>信号数据分析与建模流程</span></a></li>
-        </ul>
-      </section>
-      <section aria-labelledby="home-notes">
-        <div class="section-heading"><h2 id="home-notes">论文笔记</h2><a href="notes.html">全部笔记 <span aria-hidden="true">→</span></a></div>
-        <ul class="home-links">
-          <li><a href="notes.html#transformer"><strong>Transformer 与长序列</strong><span>比较注意力结构与跨片段记忆</span></a></li>
-          <li><a href="notes.html#efficient-attention"><strong>FlashAttention 与 GQA</strong><span>理解显存访问和 KV 缓存</span></a></li>
-        </ul>
-      </section>
+    <div class="container site-content">
+<section class="section" id="courses"><h2 class="mb-3">学习导航</h2><div class="showcase"><a class="showcase-card art-course" href="courses.html"><div><strong>课程档案</strong><span>14 门计算机课程</span></div></a><a class="showcase-card art-plan" href="plan.html"><div><strong>课程规划</strong><span>基础 · 系统 · 应用 · 实验</span></div></a><a class="showcase-card art-project" href="projects.html"><div><strong>项目</strong><span>StudyFlow 与数据分析</span></div></a></div></section><section class="section" id="posts"><h2 class="mb-3">学习记录</h2><div class="post-list"><article class="iro-post"><a class="post-art art-mnist" href="courses/deep-learning.html#work" aria-label="MNIST 手写数字识别"><img src="assets/mnist-samples.png" width="542" height="102" alt=""></a><div class="post-copy"><p class="post-meta">深度学习 · Python</p><h3><a href="courses/deep-learning.html#work">MNIST 手写数字识别</a></h3><p class="minor">对照 MLP、CNN 与自定义网络。自定义 CNN 的测试准确率为 98.50%。</p><a class="post-more" href="courses/deep-learning.html#work" aria-label="阅读MNIST 手写数字识别">阅读全文 →</a></div></article><article class="iro-post"><a class="post-art art-android" href="courses/android.html#work" aria-label="用 Room 查询本地新闻"></a><div class="post-copy"><p class="post-meta">移动应用开发 · Java</p><h3><a href="courses/android.html#work">用 Room 查询本地新闻</a></h3><p class="minor">标题搜索、发布时间排序，以及列表到详情的衔接。</p><a class="post-more" href="courses/android.html#work" aria-label="阅读用 Room 查询本地新闻">阅读全文 →</a></div></article><article class="iro-post"><a class="post-art art-data" href="courses/data-science.html#work" aria-label="CPCS2018 数据审计"></a><div class="post-copy"><p class="post-meta">数据科学 · Python</p><h3><a href="courses/data-science.html#work">CPCS2018 数据审计</a></h3><p class="minor">从信号文件与标签的对齐出发，检查异常和重复记录。</p><a class="post-more" href="courses/data-science.html#work" aria-label="阅读CPCS2018 数据审计">阅读全文 →</a></div></article><article class="iro-post"><a class="post-art art-notes" href="notes.html" aria-label="Transformer 及其变体"></a><div class="post-copy"><p class="post-meta">论文笔记</p><h3><a href="notes.html">Transformer 及其变体</a></h3><p class="minor">从长序列注意力读到 FlashAttention 与 GQA，整理三种常见的计算瓶颈。</p><a class="post-more" href="notes.html" aria-label="阅读Transformer 及其变体">阅读全文 →</a></div></article></div></section><section class="section" id="plan"><h2 class="mb-3">学习路线</h2><div class="plan-link"><p>从 C 语言和线性代数起步，经过系统与应用课，再用模型实验和论文阅读串联。</p><a href="plan.html">查看课程规划 →</a></div></section>
     </div>
   </main>
-  <footer class="site-footer border-top">
-    <div class="container d-flex flex-wrap justify-content-between gap-2 py-3 small">
-      <span class="minor">X-ING 学习作品集</span>
-      <a href="https://github.com/3315531721/CS-lecture">GitHub 私有仓库 ↗</a>
+  <a class="back-top" href="#top" aria-label="返回顶部">↑</a>
+  <footer class="site-footer">
+    <div class="container">
+      <p><strong>X‑ING</strong> · <a href="https://github.com/3315531721/CS-lecture">GitHub 私有仓库 ↗</a></p>
+      <p class="small minor">主题设计参考 <a href="https://github.com/mirai-mamori/Sakurairo">Sakurairo</a></p>
     </div>
   </footer>
+  <dialog class="search-dialog" aria-labelledby="search-title">
+    <form method="dialog" class="search-head"><h2 id="search-title">站内搜索</h2><button type="submit" aria-label="关闭搜索">×</button></form>
+    <label class="visually-hidden" for="site-search">查找课程、项目或笔记</label>
+    <input id="site-search" type="search" placeholder="查找课程、项目或笔记" autocomplete="off">
+    <p class="search-status minor" aria-live="polite"></p>
+    <ul class="search-results"></ul>
+  </dialog>
 </body>
 </html>

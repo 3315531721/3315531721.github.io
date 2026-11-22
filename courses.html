@@ -4,36 +4,53 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="14 门课程的独立页面，包含学习要点、可浏览成果和对应的课程仓库。">
-  <meta name="theme-color" content="#f5f7fc">
+  <meta name="theme-color" content="#f5eef2">
   <title>课程档案 · X-ING</title>
   <link rel="stylesheet" href="./assets/bootstrap.min.css">
   <link rel="stylesheet" href="./assets/portfolio.css">
+  <script src="./assets/search-index.js" defer></script>
+  <script src="./assets/portfolio.js" defer></script>
 </head>
 <body id="top">
   <a class="visually-hidden-focusable" href="#main">跳到正文</a>
-  <header class="site-header border-bottom">
-    <div class="container d-flex align-items-center justify-content-between flex-wrap">
-      <a class="brand" href="./" aria-label="X-ING 学习作品集首页"><span class="brand-mark" aria-hidden="true">X</span><span>X‑ING</span></a>
-      <nav class="nav site-nav" aria-label="主导航"><a class="nav-link" href="./courses.html" aria-current="page">课程档案</a>
+  <header class="site-header">
+    <a class="brand" href="./" aria-label="X-ING 学习作品集首页">X‑ING</a>
+    <div class="nav-pod">
+      <button class="nav-toggle" type="button" aria-controls="site-navigation" aria-expanded="false">导航</button>
+      <nav id="site-navigation" class="nav site-nav" aria-label="主导航"><a class="nav-link" href="./">首页</a>
+<a class="nav-link" href="./courses.html" aria-current="page">课程档案</a>
 <a class="nav-link" href="./plan.html">课程规划</a>
 <a class="nav-link" href="./projects.html">项目</a>
 <a class="nav-link" href="./notes.html">论文笔记</a></nav>
+      <button class="search-trigger" type="button" data-search aria-label="站内搜索"><span class="search-icon" aria-hidden="true"></span></button>
     </div>
+    <button class="theme-toggle" type="button" aria-label="切换深色模式" aria-pressed="false">☾</button>
   </header>
-  <main id="main" class="container">
-<header class="page-intro"><h1>课程档案</h1><p>查看 14 门课程。实验代码和摘要可以直接阅读，完整资料由 GitHub 管理。</p></header><div id="regular" class="pb-4 d-flex flex-wrap gap-3"><a href="#foundations">数学与通识</a><a href="#programming">程序设计与实验</a><a href="#systems">计算机系统与数据库</a><a href="#ai-data">人工智能与数据</a></div><section class="section" id="foundations"><h2 class="mb-3">数学与通识</h2><div class="row row-cols-1 row-cols-md-2 g-3"><div class="col"><article class="course-row"><h3><a href="courses/cs-intro.html">计算机导论 →</a></h3><p>数据表示、计算机分层与算法入门。</p></article></div><div class="col"><article class="course-row"><h3><a href="courses/linear-algebra.html">线性代数 →</a></h3><p>向量、矩阵、线性变换与特征值。</p></article></div><div class="col"><article class="course-row"><h3><a href="courses/physics.html">大学物理 →</a></h3><p>从物理模型出发，用量纲和数量级检查推导。</p></article></div><div class="col"><article class="course-row"><h3><a href="courses/english.html">高级英语 →</a></h3><p>技术阅读、摘要与英语听读。</p></article></div></div></section><section class="section" id="programming"><h2 class="mb-3">程序设计与实验</h2><div class="row row-cols-1 row-cols-md-2 g-3"><div class="col"><article class="course-row"><h3><a href="courses/c-programming.html">C 语言程序设计 →</a></h3><p>数组、指针、结构体和文件处理。</p></article></div><div class="col"><article class="course-row"><h3><a href="courses/c-lab.html">C 语言程序设计实验 →</a></h3><p>从编译与调试到边界输入测试。</p></article></div><div class="col"><article class="course-row"><h3><a href="courses/algorithms.html">数据结构与算法 →</a></h3><p>线性结构、树与图，以及排序和复杂度。</p></article></div><div class="col"><article class="course-row"><h3><a href="courses/android.html">移动应用开发 →</a></h3><p>Activity、消息传递、广播和本地数据库。</p></article></div></div></section><section class="section" id="systems"><h2 class="mb-3">计算机系统与数据库</h2><div class="row row-cols-1 row-cols-md-2 g-3"><div class="col"><article class="course-row"><h3><a href="courses/digital.html">数字电子技术 →</a></h3><p>逻辑门、组合逻辑与时序逻辑。</p></article></div><div class="col"><article class="course-row"><h3><a href="courses/os.html">操作系统 →</a></h3><p>进程与地址空间、同步、虚拟化和持久化。</p></article></div><div class="col"><article class="course-row"><h3><a href="courses/databases.html">数据库原理及应用 A →</a></h3><p>关系建模、SQL、索引和事务。</p></article></div></div></section><section class="section" id="ai-data"><h2 class="mb-3">人工智能与数据</h2><div class="row row-cols-1 row-cols-md-2 g-3"><div class="col"><article class="course-row"><h3><a href="courses/ai.html">人工智能导论 →</a></h3><p>状态空间搜索、知识表示与学习方法。</p></article></div><div class="col"><article class="course-row"><h3><a href="courses/data-science.html">数据科学 →</a></h3><p>数据审计、划分、建模与结果复核。</p></article></div><div class="col"><article class="course-row"><h3><a href="courses/deep-learning.html">深度学习 →</a></h3><p>用 PyTorch 对照 MLP、CNN 和自定义网络。</p></article></div></div></section><section class="section" id="extra"><h2 class="mb-3">课外拓展</h2><div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3 cards"><div class="col"><article class="card feature-card h-100"><div class="card-body">
+  <main id="main">
+<header class="page-intro"><div class="container"><h1>课程档案</h1><p>查看 14 门课程。实验代码和摘要可以直接阅读，完整资料由 GitHub 管理。</p></div></header>
+    <div class="container site-content">
+<div id="regular" class="pb-4 d-flex flex-wrap gap-3"><a href="#foundations">数学与通识</a><a href="#programming">程序设计与实验</a><a href="#systems">计算机系统与数据库</a><a href="#ai-data">人工智能与数据</a></div><section class="section" id="foundations"><h2 class="mb-3">数学与通识</h2><div class="row row-cols-1 row-cols-md-2 g-3"><div class="col"><article class="course-row"><h3><a href="courses/cs-intro.html">计算机导论 →</a></h3><p>数据表示、计算机分层与算法入门。</p></article></div><div class="col"><article class="course-row"><h3><a href="courses/linear-algebra.html">线性代数 →</a></h3><p>向量、矩阵、线性变换与特征值。</p></article></div><div class="col"><article class="course-row"><h3><a href="courses/physics.html">大学物理 →</a></h3><p>从物理模型出发，用量纲和数量级检查推导。</p></article></div><div class="col"><article class="course-row"><h3><a href="courses/english.html">高级英语 →</a></h3><p>技术阅读、摘要与英语听读。</p></article></div></div></section><section class="section" id="programming"><h2 class="mb-3">程序设计与实验</h2><div class="row row-cols-1 row-cols-md-2 g-3"><div class="col"><article class="course-row"><h3><a href="courses/c-programming.html">C 语言程序设计 →</a></h3><p>数组、指针、结构体和文件处理。</p></article></div><div class="col"><article class="course-row"><h3><a href="courses/c-lab.html">C 语言程序设计实验 →</a></h3><p>从编译与调试到边界输入测试。</p></article></div><div class="col"><article class="course-row"><h3><a href="courses/algorithms.html">数据结构与算法 →</a></h3><p>线性结构、树与图，以及排序和复杂度。</p></article></div><div class="col"><article class="course-row"><h3><a href="courses/android.html">移动应用开发 →</a></h3><p>Activity、消息传递、广播和本地数据库。</p></article></div></div></section><section class="section" id="systems"><h2 class="mb-3">计算机系统与数据库</h2><div class="row row-cols-1 row-cols-md-2 g-3"><div class="col"><article class="course-row"><h3><a href="courses/digital.html">数字电子技术 →</a></h3><p>逻辑门、组合逻辑与时序逻辑。</p></article></div><div class="col"><article class="course-row"><h3><a href="courses/os.html">操作系统 →</a></h3><p>进程与地址空间、同步、虚拟化和持久化。</p></article></div><div class="col"><article class="course-row"><h3><a href="courses/databases.html">数据库原理及应用 A →</a></h3><p>关系建模、SQL、索引和事务。</p></article></div></div></section><section class="section" id="ai-data"><h2 class="mb-3">人工智能与数据</h2><div class="row row-cols-1 row-cols-md-2 g-3"><div class="col"><article class="course-row"><h3><a href="courses/ai.html">人工智能导论 →</a></h3><p>状态空间搜索、知识表示与学习方法。</p></article></div><div class="col"><article class="course-row"><h3><a href="courses/data-science.html">数据科学 →</a></h3><p>数据审计、划分、建模与结果复核。</p></article></div><div class="col"><article class="course-row"><h3><a href="courses/deep-learning.html">深度学习 →</a></h3><p>用 PyTorch 对照 MLP、CNN 和自定义网络。</p></article></div></div></section><section class="section" id="extra"><h2 class="mb-3">课外拓展</h2><div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3 cards"><div class="col"><article class="card feature-card h-100"><div class="card-body">
       <h3><a href="https://jyywiki.cn/OS/2026/">南京大学 · 操作系统原理 <span aria-hidden="true">↗</span></a></h3>
       <p class="minor">蒋炎岩 · 进程、并发与文件系统。</p>
     </div></article></div><div class="col"><article class="card feature-card h-100"><div class="card-body">
       <h3><a href="https://15445.courses.cs.cmu.edu/">CMU 15-445/645 · 数据库系统 <span aria-hidden="true">↗</span></a></h3>
       <p class="minor">存储、索引、查询执行和事务恢复。</p>
     </div></article></div></div></section>
+    </div>
   </main>
-  <footer class="site-footer border-top">
-    <div class="container d-flex flex-wrap justify-content-between gap-2 py-3 small">
-      <span class="minor">X-ING 学习作品集</span>
-      <a href="https://github.com/3315531721/CS-lecture">GitHub 私有仓库 ↗</a>
+  <a class="back-top" href="#top" aria-label="返回顶部">↑</a>
+  <footer class="site-footer">
+    <div class="container">
+      <p><strong>X‑ING</strong> · <a href="https://github.com/3315531721/CS-lecture">GitHub 私有仓库 ↗</a></p>
+      <p class="small minor">主题设计参考 <a href="https://github.com/mirai-mamori/Sakurairo">Sakurairo</a></p>
     </div>
   </footer>
+  <dialog class="search-dialog" aria-labelledby="search-title">
+    <form method="dialog" class="search-head"><h2 id="search-title">站内搜索</h2><button type="submit" aria-label="关闭搜索">×</button></form>
+    <label class="visually-hidden" for="site-search">查找课程、项目或笔记</label>
+    <input id="site-search" type="search" placeholder="查找课程、项目或笔记" autocomplete="off">
+    <p class="search-status minor" aria-live="polite"></p>
+    <ul class="search-results"></ul>
+  </dialog>
 </body>
 </html>

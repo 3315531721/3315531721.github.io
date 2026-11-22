@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>X-ING · 内容管理</title>
+  <link rel="stylesheet" href="/preview/assets/bootstrap.min.css">
+  <script src="/admin.js" defer></script>
+  <style>
+    body { background:#fcf7fb; color:#302a37; }
+    main { max-width:58rem; margin-inline:auto; padding:1.5rem 1rem 4rem; }
+    .controls { position:sticky; inset-block-start:0; z-index:1; background:#fcf7fb; padding:.6rem 0; border-bottom:1px solid #ebdfe7; }
+    .card { border-color:#ebdfe7; }
+    textarea { min-height:4.25rem; }
+    .btn-primary { --bs-btn-bg:#9a3564; --bs-btn-border-color:#9a3564; --bs-btn-hover-bg:#7a284d; --bs-btn-hover-border-color:#7a284d; }
+    [data-status] { min-height:1.5rem; margin:.5rem 0 0; }
+  </style>
+</head>
+<body>
+  <main>
+    <h1 class="h2">X‑ING 内容管理</h1>
+    <p>编辑本地草稿，保存后预览。发布会把选定内容推送到公开作品集。</p>
+    <form id="editor">
+      <div class="controls d-flex gap-2 flex-wrap" aria-label="草稿操作">
+        <button class="btn btn-primary" type="submit" disabled>保存草稿</button>
+        <a class="btn btn-outline-secondary" href="/preview/" target="_blank" rel="noopener">预览已保存内容 ↗</a>
+        <button class="btn btn-outline-primary" type="button" id="publish" disabled>发布到 GitHub Pages</button>
+      </div>
+      <p data-status role="status" aria-live="polite">正在载入。</p>
+      <fieldset id="fields" disabled>
+        <section class="card card-body my-3" aria-labelledby="cover-heading">
+          <h2 class="h5" id="cover-heading">首页封面</h2>
+          <label for="cover-title" class="form-label">标题</label>
+          <input id="cover-title" class="form-control mb-2" maxlength="48" required>
+          <label for="signature" class="form-label">签名</label>
+          <input id="signature" class="form-control" maxlength="140" required>
+        </section>
+        <section class="card card-body my-3" aria-labelledby="course-heading">
+          <h2 class="h5" id="course-heading">课程档案</h2>
+          <label for="course" class="form-label">课程</label>
+          <select id="course" class="form-select mb-3"></select>
+          <label for="course-intro" class="form-label">课程简介</label>
+          <textarea id="course-intro" class="form-control mb-2" maxlength="300"></textarea>
+          <label for="course-task" class="form-label">自测任务</label>
+          <textarea id="course-task" class="form-control mb-2" maxlength="300"></textarea>
+          <label for="course-note" class="form-label">补充笔记</label>
+          <textarea id="course-note" class="form-control" maxlength="4000"></textarea>
+        </section>
+        <section class="card card-body my-3" aria-labelledby="plan-heading">
+          <h2 class="h5" id="plan-heading">课程规划</h2>
+          <div id="plan"></div>
+        </section>
+        <section class="card card-body my-3" aria-labelledby="entry-heading">
+          <h2 class="h5" id="entry-heading">项目与论文笔记</h2>
+          <div id="entries"></div>
+          <button class="btn btn-outline-secondary align-self-start" type="button" id="new-entry">添加记录</button>
+        </section>
+      </fieldset>
+    </form>
+  </main>
+  <template id="entry-template">
+    <fieldset class="border rounded p-3 mb-3 entry">
+      <legend class="h6">补充记录</legend>
+      <label class="d-block mb-2">分类
+        <select class="form-select" data-field="category"><option>项目</option><option>论文笔记</option></select>
+      </label>
+      <label class="d-block mb-2">标题
+        <input class="form-control" data-field="title" maxlength="100" required>
+      </label>
+      <label class="d-block mb-2">正文
+        <textarea class="form-control" data-field="body" maxlength="5000" rows="4" required></textarea>
+      </label>
+      <button class="btn btn-sm btn-outline-secondary" type="button" data-remove>移除草稿记录</button>
+    </fieldset>
+  </template>
+</body>
+</html>
