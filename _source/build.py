@@ -76,11 +76,6 @@ assert {signal.stem for signal in signals} == set(labels.index), (
     .sortedWith(compareBy<HomeworkTask> { it.status == TaskStatus.DONE_LOCAL }.thenBy { it.dueAt })
     .toList()"""),
 }
-FEATURED = {
-    "deep-learning": "MNIST 实验 · 模型定义与对照结果",
-    "android": "Android 实验 · Intent 与 Room 查询",
-    "data-science": "CPCS2018 实验 · 数据审计与校验代码",
-}
 PLAN = [
     ("基础", ("cs-intro", "c-programming", "c-lab", "linear-algebra"), "先把指针与数组、向量与矩阵练熟。留下一个可编译的小程序和一页推导笔记。"),
     ("系统", ("algorithms", "digital", "os", "databases"), "从复杂度、逻辑电路走到进程和数据存储。完成一次图遍历、一道进程题和一组 SQL 查询。"),
@@ -132,7 +127,7 @@ def write(path, title, description, active, body):
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="{escape(description, quote=True)}">
-  <meta name="theme-color" content="#f6f5ef">
+  <meta name="theme-color" content="#f5f7fc">
   <title>{title} · X-ING</title>
   <link rel="stylesheet" href="{rel}assets/bootstrap.min.css">
   <link rel="stylesheet" href="{rel}assets/portfolio.css">
@@ -141,7 +136,7 @@ def write(path, title, description, active, body):
   <a class="visually-hidden-focusable" href="#main">跳到正文</a>
   <header class="site-header border-bottom">
     <div class="container d-flex align-items-center justify-content-between flex-wrap">
-      <a class="brand" href="{rel}" aria-label="X-ING 学习作品集首页">X‑ING</a>
+      <a class="brand" href="{rel}" aria-label="X-ING 学习作品集首页"><span class="brand-mark" aria-hidden="true">X</span><span>X‑ING</span></a>
       <nav class="nav site-nav" aria-label="主导航">{nav_markup}</nav>
     </div>
   </header>
@@ -173,33 +168,82 @@ def course_link(slug):
 def build_home():
     intro = """
     <section class="hero" id="about">
-      <div class="row g-4 align-items-end">
-        <div class="col-lg-8">
+      <div class="hero-grid">
+        <div class="hero-copy">
           <h1>学习作品集</h1>
-          <p>我是 X‑ING。这里记录我的计算机课程、实验代码、项目进展和论文阅读。</p>
-          <div class="d-flex flex-wrap gap-2 mt-4">
+          <p>计算机课程、实验代码、项目进展和论文阅读。</p>
+          <div class="hero-actions d-flex flex-wrap gap-2">
             <a href="courses.html" class="btn btn-primary">浏览课程档案</a>
             <a href="plan.html" class="btn btn-outline-dark">查看课程规划</a>
           </div>
         </div>
-        <div class="col-lg-4">
-          <aside class="hero-note" aria-label="精选学习成果">
-            <h2 class="h6 mb-2">精选成果</h2>
-            <a href="courses/deep-learning.html#work">MNIST 模型对照与结果 ↗</a>
-            <a href="courses/android.html#work">Android 本地数据查询 ↗</a>
-            <a href="notes.html">Transformer 论文阅读 ↗</a>
-          </aside>
+        <div class="experiment">
+          <div class="experiment-head">
+            <h2>MNIST 手写数字识别</h2>
+            <span class="experiment-label">深度学习</span>
+          </div>
+          <figure class="experiment-samples">
+            <img src="assets/mnist-samples.png" width="542" height="102" alt="MNIST 样本中手写的 7、2、1、0、4">
+            <figcaption><a href="https://keras.io/api/datasets/mnist/">MNIST，LeCun 与 Cortes</a> · 已着色 · <a href="https://creativecommons.org/licenses/by-sa/3.0/">CC BY-SA 3.0</a></figcaption>
+          </figure>
+          <div class="experiment-result">
+            <div><strong>98.50%</strong><p>自定义 CNN 测试准确率</p></div>
+            <a href="courses/deep-learning.html#work">代码与结果 <span aria-hidden="true">↗</span></a>
+          </div>
         </div>
       </div>
     </section>"""
-    featured = cards(card(COURSES[key][0], label, course_url(key) + "#work") for key, label in FEATURED.items())
-    catalog = section("课程学习", featured + '<p class="mt-3 mb-0"><a href="courses.html">查看全部 14 门课程 →</a></p>', "courses")
-    plan = section("课程规划", '<p class="mb-2">从 C 语言与线性代数开始，继续学习算法、系统与数据库，再用应用和模型实验把知识串起来。</p><a href="plan.html">查看阶段目标与练习 →</a>', "plan")
-    related = section("项目与论文笔记", cards((
-        card("学程 StudyFlow", "Android 学习管理原型，展示作业筛选与下一步设计。", "projects.html#studyflow"),
-        card("CPCS2018 数据分析", "从信号文件对齐与质量检查入手，整理可复核的建模流程。", "projects.html#data-project"),
-        card("Transformer 及其变体", "把模型结构、通信路径与显存访问分开比较。", "notes.html"),
-    )), "posts")
+    catalog = """
+    <section id="courses" class="home-section" aria-labelledby="home-courses">
+      <div class="section-heading">
+        <h2 id="home-courses">课程成果</h2>
+        <a href="courses.html">全部 14 门课程 <span aria-hidden="true">→</span></a>
+      </div>
+      <div class="row row-cols-1 row-cols-md-2 g-3">
+        <div class="col"><a class="work-card" href="courses/android.html#work">
+          <span class="work-meta">移动应用开发 · Java</span>
+          <strong>用 Room 查询本地新闻</strong>
+          <span class="work-detail">标题搜索、排序与列表和详情的衔接</span>
+          <span class="work-arrow" aria-hidden="true">↗</span>
+        </a></div>
+        <div class="col"><a class="work-card" href="courses/data-science.html#work">
+          <span class="work-meta">数据科学 · Python</span>
+          <strong>CPCS2018 数据审计</strong>
+          <span class="work-detail">波形文件与标签的对齐检查</span>
+          <span class="work-arrow" aria-hidden="true">↗</span>
+        </a></div>
+      </div>
+    </section>"""
+    plan = """
+    <section class="home-section home-plan" id="plan" aria-labelledby="home-plan">
+      <div class="section-heading">
+        <h2 id="home-plan">课程规划</h2>
+        <a href="plan.html">阶段目标与练习 <span aria-hidden="true">→</span></a>
+      </div>
+      <ol class="plan-preview">
+        <li><strong>基础</strong><span>C 语言与线性代数</span></li>
+        <li><strong>系统</strong><span>算法、操作系统与数据库</span></li>
+        <li><strong>应用</strong><span>Android 与数据分析</span></li>
+        <li><strong>实验</strong><span>模型复现与论文阅读</span></li>
+      </ol>
+    </section>"""
+    related = """
+    <div id="posts" class="home-section home-secondary">
+      <section aria-labelledby="home-projects">
+        <div class="section-heading"><h2 id="home-projects">项目</h2><a href="projects.html">全部项目 <span aria-hidden="true">→</span></a></div>
+        <ul class="home-links">
+          <li><a href="projects.html#studyflow"><strong>学程 StudyFlow</strong><span>Android 学习管理原型</span></a></li>
+          <li><a href="projects.html#data-project"><strong>CPCS2018 数据分析</strong><span>信号数据分析与建模流程</span></a></li>
+        </ul>
+      </section>
+      <section aria-labelledby="home-notes">
+        <div class="section-heading"><h2 id="home-notes">论文笔记</h2><a href="notes.html">全部笔记 <span aria-hidden="true">→</span></a></div>
+        <ul class="home-links">
+          <li><a href="notes.html#transformer"><strong>Transformer 与长序列</strong><span>比较注意力结构与跨片段记忆</span></a></li>
+          <li><a href="notes.html#efficient-attention"><strong>FlashAttention 与 GQA</strong><span>理解显存访问和 KV 缓存</span></a></li>
+        </ul>
+      </section>
+    </div>"""
     write("index.html", "学习作品集", "X-ING 的课程成果、项目、论文笔记与课程规划。", "", intro + catalog + plan + related)
 
 
