@@ -49,6 +49,10 @@
     .entry-copy p:last-child { margin-bottom: 0; }
     .about { display: grid; grid-template-columns: minmax(6rem, 1fr) 3fr; gap: 1rem; padding-block: 1.5rem 3.5rem; border-top: 1px solid var(--rule); }
     .about h2, .about p { margin: 0; }
+    .courses h3 { margin: 0 0 .3rem; }
+    .courses h3 a { text-decoration: none; }
+    .courses h3 a:hover { text-decoration: underline; }
+    .course-links { display: flex; flex-wrap: wrap; gap: .5rem 1.2rem; margin-top: .75rem; font-size: .94rem; }
     .about p { max-width: 34rem; color: var(--muted); }
     .bottom { border-top: 1px solid var(--rule); padding-block: 1.25rem; color: var(--muted); font-size: .88rem; }
     @media (max-width: 32rem) {
@@ -62,6 +66,7 @@
     <a class="brand" href="#top" aria-label="X‑ING 博客首页">X‑ING</a>
     <nav aria-label="主导航">
       <a href="#posts">文章</a>
+      <a href="#courses">课程</a>
       <a href="#about">关于</a>
     </nav>
   </header>
@@ -86,6 +91,18 @@
           <p>先写下过程和结果。下次碰到相似的问题，就有地方可查。</p>
         </div>
       </details>
+    </section>
+    <section id="courses" class="about courses" aria-labelledby="courses-title">
+      <h2 id="courses-title">课程学习</h2>
+      <div>
+        <h3><a href="courses.html">CS-lecture 课程目录 →</a></h3>
+        <p>14 门常规课程，涵盖编程、数学、系统与人工智能，另有公开课作为拓展。</p>
+        <div class="course-links">
+          <a href="courses.html#regular">常规课程</a>
+          <a href="courses.html#extra">课外拓展</a>
+          <a href="https://github.com/3315531721/CS-lecture">GitHub 私有仓库 ↗</a>
+        </div>
+      </div>
     </section>
     <section id="about" class="about" aria-labelledby="about-title">
       <h2 id="about-title">关于</h2>

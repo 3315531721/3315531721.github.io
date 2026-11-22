@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="X-ING 的 CS-lecture 课程目录，涵盖 14 门常规课程与课外拓展。">
+  <meta name="theme-color" content="#f2efe7">
+  <title>CS-lecture 课程目录 · X-ING</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --paper: #f2efe7;
+      --ink: #23251e;
+      --muted: #55594e;
+      --rule: #bdb9aa;
+      --olive: #dce4bc;
+      --accent: #984021;
+      font-family: system-ui, "PingFang SC", "Microsoft YaHei", sans-serif;
+    }
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-padding-top: 1.25rem; }
+    body { margin: 0; color: var(--ink); background: var(--paper); line-height: 1.65; }
+    a { color: inherit; text-underline-offset: .28em; }
+    a:focus-visible { outline: 2px solid var(--accent); outline-offset: 5px; }
+    .shell { width: min(100% - 2rem, 68rem); margin-inline: auto; }
+    .top, .bottom { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: .6rem 1.35rem; }
+    .top { padding-block: 1.2rem; border-bottom: 1px solid var(--rule); }
+    .brand { letter-spacing: .12em; font-weight: 750; text-decoration: none; }
+    .top nav, .links { display: flex; gap: .55rem 1.15rem; flex-wrap: wrap; }
+    .top nav a, .bottom a { text-decoration: none; }
+    .top nav a:hover, .bottom a:hover { text-decoration: underline; }
+    .hero { padding-block: clamp(2.75rem, 7vw, 5rem) 2.5rem; }
+    .hero h1 { margin: 0; font: 500 clamp(3.25rem, 10vw, 8rem)/.95 Georgia, serif; letter-spacing: -.065em; }
+    .hero h1 span { color: var(--accent); }
+    .hero p { margin: 1rem 0; color: var(--muted); max-width: 42rem; }
+    .links { align-items: center; }
+    .links a { font-weight: 630; }
+    .primary { padding: .58rem .9rem; background: var(--olive); text-decoration: none; }
+    .primary:hover { text-decoration: underline; }
+    .regular, .extra { border-top: 1px solid var(--ink); padding: 1.5rem 0 2.7rem; }
+    h2 { margin: 0; font-size: clamp(1.5rem, 4vw, 2.05rem); }
+    .meta { color: var(--muted); margin: .3rem 0 1.4rem; }
+    .tracks { display: flex; flex-wrap: wrap; gap: .45rem 1.1rem; margin-bottom: 1.9rem; font-size: .9rem; }
+    .track + .track { margin-top: 1.55rem; }
+    .track h3 { font-size: 1.03rem; font-weight: 700; margin: 0 0 .5rem; }
+    .course-grid, .extra-grid { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .course-grid { gap: 0 1.5rem; }
+    .course-grid li { border-top: 1px solid var(--rule); padding: .8rem .15rem .9rem; }
+    .course-grid h4, .extra-grid h3 { font-size: 1.05rem; margin: 0; }
+    .course-grid p, .extra-grid p { margin: .3rem 0 0; color: var(--muted); font-size: .94rem; }
+    .course-grid a, .extra-grid a { display: flex; min-height: 1.5rem; align-items: start; justify-content: space-between; gap: .5rem; text-decoration: none; }
+    .course-grid a:hover, .extra-grid a:hover { text-decoration: underline; }
+    .course-grid span, .extra-grid span { color: var(--accent); }
+    .extra-grid { gap: .8rem; margin-top: 1.15rem; }
+    .extra-grid li { padding: 1rem; background: var(--olive); }
+    .extra-grid .source { margin: 0 0 .3rem; font-size: .82rem; }
+    .bottom { border-top: 1px solid var(--rule); padding-block: 1.2rem; color: var(--muted); font-size: .87rem; }
+    @media (max-width: 36rem) {
+      .course-grid, .extra-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body id="top">
+  <header class="shell top">
+    <a class="brand" href="./" aria-label="X-ING 博客首页">X-ING</a>
+    <nav aria-label="主导航">
+      <a href="./#posts">文章</a>
+      <a href="courses.html" aria-current="page">课程</a>
+      <a href="./#about">关于</a>
+    </nav>
+  </header>
+  <main class="shell">
+    <section class="hero" aria-labelledby="title">
+      <h1 id="title">CS<span>-</span>lecture</h1>
+      <p>计算机课程学习目录。从课堂基础和实验出发，延伸到操作系统与数据库的公开课。</p>
+      <div class="links">
+        <a class="primary" href="#regular">浏览常规课程</a>
+        <a href="#extra">课外拓展</a>
+        <a href="https://github.com/3315531721/CS-lecture">GitHub 私有仓库 ↗</a>
+      </div>
+    </section>
+    <section class="regular" id="regular" aria-labelledby="regular-title">
+      <h2 id="regular-title">常规课程</h2>
+      <p class="meta">14 门课程。课程名链接到 GitHub 对应目录，资料需用有权限的账号查看。</p>
+      <nav class="tracks" aria-label="常规课程分组">
+        <a href="#foundations">数学与通识</a>
+        <a href="#programming">程序设计与实验</a>
+        <a href="#systems">计算机系统与数据库</a>
+        <a href="#intelligence">人工智能与数据</a>
+      </nav>
+      <section class="track" id="foundations" aria-labelledby="foundations-title">
+        <h3 id="foundations-title">数学与通识</h3>
+        <ul class="course-grid">
+          <li>
+            <h4><a href="https://github.com/3315531721/CS-lecture/tree/main/Introduction%20to%20Computer%20Science">计算机导论<span aria-hidden="true">↗</span></a></h4>
+            <p>认识计算机系统、数据表示与基本算法。</p>
+          </li>
+          <li>
+            <h4><a href="https://github.com/3315531721/CS-lecture/tree/main/Linear%20Algebra">线性代数<span aria-hidden="true">↗</span></a></h4>
+            <p>从向量、矩阵运算学到线性变换与特征值。</p>
+          </li>
+          <li>
+            <h4><a href="https://github.com/3315531721/CS-lecture/tree/main/General%20Physics">大学物理<span aria-hidden="true">↗</span></a></h4>
+            <p>复习基本物理模型，以及量纲和数量级判断。</p>
+          </li>
+          <li>
+            <h4><a href="https://github.com/3315531721/CS-lecture/tree/main/Advanced%20English">高级英语<span aria-hidden="true">↗</span></a></h4>
+            <p>练习技术文章精读、摘要和英文表达。</p>
+          </li>
+        </ul>
+      </section>
+      <section class="track" id="programming" aria-labelledby="programming-title">
+        <h3 id="programming-title">程序设计与实验</h3>
+        <ul class="course-grid">
+          <li>
+            <h4><a href="https://github.com/3315531721/CS-lecture/tree/main/C%20Programming">C 语言程序设计<span aria-hidden="true">↗</span></a></h4>
+            <p>从基础语法进阶到数组、指针、结构体与文件。</p>
+          </li>
+          <li>
+            <h4><a href="https://github.com/3315531721/CS-lecture/tree/main/C%20Programming%20Lab">C 语言程序设计实验<span aria-hidden="true">↗</span></a></h4>
+            <p>练习编译、调试、边界测试与实验记录。</p>
+          </li>
+          <li>
+            <h4><a href="https://github.com/3315531721/CS-lecture/tree/main/Data%20Structures%20and%20Algorithms">数据结构与算法<span aria-hidden="true">↗</span></a></h4>
+            <p>用复杂度比较线性表、树、图、排序与查找。</p>
+          </li>
+          <li>
+            <h4><a href="https://github.com/3315531721/CS-lecture/tree/main/Mobile%20Application%20Development">移动应用开发<span aria-hidden="true">↗</span></a></h4>
+            <p>练习 Android 页面、生命周期和组件间通信。</p>
+          </li>
+        </ul>
+      </section>
+      <section class="track" id="systems" aria-labelledby="systems-title">
+        <h3 id="systems-title">计算机系统与数据库</h3>
+        <ul class="course-grid">
+          <li>
+            <h4><a href="https://github.com/3315531721/CS-lecture/tree/main/Digital%20Electronic%20Technology">数字电子技术<span aria-hidden="true">↗</span></a></h4>
+            <p>从逻辑门入门，理解组合电路与时序电路。</p>
+          </li>
+          <li>
+            <h4><a href="https://github.com/3315531721/CS-lecture/tree/main/Operating%20Systems">操作系统<span aria-hidden="true">↗</span></a></h4>
+            <p>围绕进程、内存、并发同步和文件系统学习。</p>
+          </li>
+          <li>
+            <h4><a href="https://github.com/3315531721/CS-lecture/tree/main/Database%20Principles%20and%20Applications%20A">数据库原理及应用 A<span aria-hidden="true">↗</span></a></h4>
+            <p>学习关系模型、SQL、索引和事务。</p>
+          </li>
+        </ul>
+      </section>
+      <section class="track" id="intelligence" aria-labelledby="intelligence-title">
+        <h3 id="intelligence-title">人工智能与数据</h3>
+        <ul class="course-grid">
+          <li>
+            <h4><a href="https://github.com/3315531721/CS-lecture/tree/main/Introduction%20to%20Artificial%20Intelligence">人工智能导论<span aria-hidden="true">↗</span></a></h4>
+            <p>了解状态空间搜索、知识表示和机器学习基础。</p>
+          </li>
+          <li>
+            <h4><a href="https://github.com/3315531721/CS-lecture/tree/main/Data%20Science">数据科学<span aria-hidden="true">↗</span></a></h4>
+            <p>从数据清洗与可视化走到建模和评估。</p>
+          </li>
+          <li>
+            <h4><a href="https://github.com/3315531721/CS-lecture/tree/main/Deep%20Learning">深度学习<span aria-hidden="true">↗</span></a></h4>
+            <p>串起模型、损失函数、训练过程与验证指标。</p>
+          </li>
+        </ul>
+      </section>
+    </section>
+    <section class="extra" id="extra" aria-labelledby="extra-title">
+      <h2 id="extra-title">课外拓展</h2>
+      <ul class="extra-grid">
+        <li>
+          <p class="source">蒋炎岩 · 2026 春</p>
+          <h3><a href="https://jyywiki.cn/OS/2026/">南京大学 · 操作系统原理<span aria-hidden="true">↗</span></a></h3>
+          <p>从程序和进程入手，继续学习并发、存储与文件系统。</p>
+        </li>
+        <li>
+          <p class="source">Carnegie Mellon University</p>
+          <h3><a href="https://15445.courses.cs.cmu.edu/">CMU 15-445/645 · 数据库系统<span aria-hidden="true">↗</span></a></h3>
+          <p>从 SQL 与关系模型继续深入索引、查询执行和事务恢复。</p>
+        </li>
+      </ul>
+    </section>
+  </main>
+  <footer class="shell bottom">
+    <a href="./">返回 X-ING 博客</a>
+    <a href="#top">返回顶部 ↑</a>
+  </footer>
+</body>
+</html>
