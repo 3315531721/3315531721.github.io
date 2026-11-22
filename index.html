@@ -3,115 +3,69 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="X‑ING 博客，存放技术笔记、项目记录和零散想法。">
-  <meta name="theme-color" content="#f2efe7">
-  <title>X‑ING 博客</title>
-  <style>
-    :root {
-      color-scheme: light;
-      --paper: #f2efe7;
-      --ink: #23251e;
-      --muted: #55594e;
-      --rule: #bdb9aa;
-      --olive: #dce4bc;
-      --accent: #984021;
-      font-family: system-ui, "PingFang SC", "Microsoft YaHei", sans-serif;
-    }
-    *, *::before, *::after { box-sizing: border-box; }
-    html { scroll-padding-top: 1rem; }
-    body { margin: 0; background: var(--paper); color: var(--ink); line-height: 1.7; }
-    a { color: inherit; text-underline-offset: .3em; }
-    a:focus-visible { outline: 2px solid var(--accent); outline-offset: 5px; }
-    .shell { width: min(100% - 2.5rem, 68rem); margin-inline: auto; }
-    .top, .bottom { display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
-    .top { min-height: 5rem; border-bottom: 1px solid var(--rule); }
-    .brand { letter-spacing: .12em; font-weight: 750; text-decoration: none; }
-    nav { display: flex; flex-wrap: wrap; gap: .75rem 1.75rem; font-size: .94rem; }
-    nav a, .bottom a { text-decoration: none; }
-    nav a:hover, .bottom a:hover { text-decoration: underline; }
-    .hero { padding-block: clamp(4rem, 10vw, 8.5rem) clamp(3rem, 7vw, 5.5rem); }
-    .hero h1 { margin: 0; font: 500 clamp(4rem, 15vw, 11rem)/.91 Georgia, serif; letter-spacing: -.075em; }
-    .hero h1 span { color: var(--accent); }
-    .hero p { margin: 1.5rem 0 0; color: var(--muted); font-size: clamp(1rem, 2.5vw, 1.25rem); }
-    .journal { border-top: 1px solid var(--ink); padding-block: 1.5rem 3.5rem; }
-    .journal h2, .about h2 { margin: 0 0 1.25rem; font-size: 1.3rem; }
-    .entry { background: var(--olive); padding: clamp(1.35rem, 5vw, 3.3rem); }
-    .entry summary { cursor: pointer; display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 1.25rem; list-style: none; }
-    .entry summary::-webkit-details-marker { display: none; }
-    .summary-title { display: block; font-size: clamp(1.45rem, 4vw, 2.4rem); font-weight: 650; }
-    .meta, .summary-description { display: block; color: var(--muted); }
-    .meta { font: .9rem/1.5 ui-monospace, monospace; font-variant-numeric: tabular-nums; }
-    .summary-description { margin-top: .4rem; }
-    .toggle { display: grid; place-items: center; border: 1px solid currentColor; border-radius: 50%; width: 2.5rem; height: 2.5rem; font-size: 1.4rem; }
-    .toggle::before { content: "+"; }
-    details[open] .toggle::before { content: "−"; }
-    .entry-copy { max-width: 44rem; margin-top: 1.5rem; padding-top: .5rem; border-top: 1px solid #979d7d; }
-    .entry-copy p:last-child { margin-bottom: 0; }
-    .about { display: grid; grid-template-columns: minmax(6rem, 1fr) 3fr; gap: 1rem; padding-block: 1.5rem 3.5rem; border-top: 1px solid var(--rule); }
-    .about h2, .about p { margin: 0; }
-    .courses h3 { margin: 0 0 .3rem; }
-    .courses h3 a { text-decoration: none; }
-    .courses h3 a:hover { text-decoration: underline; }
-    .course-links { display: flex; flex-wrap: wrap; gap: .5rem 1.2rem; margin-top: .75rem; font-size: .94rem; }
-    .about p { max-width: 34rem; color: var(--muted); }
-    .bottom { border-top: 1px solid var(--rule); padding-block: 1.25rem; color: var(--muted); font-size: .88rem; }
-    @media (max-width: 32rem) {
-      .top { min-height: 4.25rem; }
-      .about { grid-template-columns: 1fr; gap: .4rem; }
-    }
-  </style>
+  <meta name="description" content="X-ING 的课程成果、项目、论文笔记与课程规划。">
+  <meta name="theme-color" content="#f6f5ef">
+  <title>学习作品集 · X-ING</title>
+  <link rel="stylesheet" href="./assets/bootstrap.min.css">
+  <link rel="stylesheet" href="./assets/portfolio.css">
 </head>
 <body id="top">
-  <header class="shell top">
-    <a class="brand" href="#top" aria-label="X‑ING 博客首页">X‑ING</a>
-    <nav aria-label="主导航">
-      <a href="#posts">文章</a>
-      <a href="#courses">课程</a>
-      <a href="#about">关于</a>
-    </nav>
+  <a class="visually-hidden-focusable" href="#main">跳到正文</a>
+  <header class="site-header border-bottom">
+    <div class="container d-flex align-items-center justify-content-between flex-wrap">
+      <a class="brand" href="./" aria-label="X-ING 学习作品集首页">X‑ING</a>
+      <nav class="nav site-nav" aria-label="主导航"><a class="nav-link" href="./courses.html">课程档案</a>
+<a class="nav-link" href="./plan.html">课程规划</a>
+<a class="nav-link" href="./projects.html">项目</a>
+<a class="nav-link" href="./notes.html">论文笔记</a></nav>
+    </div>
   </header>
-  <main class="shell">
-    <section class="hero" aria-labelledby="title">
-      <h1 id="title" aria-label="X‑ING 博客">X<span>–</span>ING</h1>
-      <p>技术笔记、项目记录和零散想法。</p>
-    </section>
-    <section id="posts" class="journal" aria-labelledby="posts-title">
-      <h2 id="posts-title">最新文章</h2>
-      <details class="entry">
-        <summary>
-          <span>
-            <time class="meta" datetime="2026-11-21">2026.11.21</time>
-            <span class="summary-title">博客开张</span>
-            <span class="summary-description">从一篇短文开始，给值得回头翻的东西留个位置。</span>
-          </span>
-          <span class="toggle" aria-hidden="true"></span>
-        </summary>
-        <div class="entry-copy">
-          <p>这篇短文给博客开个头。以后这里可以记下解决过的问题、写代码时的取舍，也可以收录值得再读一遍的资料。</p>
-          <p>先写下过程和结果。下次碰到相似的问题，就有地方可查。</p>
+  <main id="main" class="container">
+
+    <section class="hero" id="about">
+      <div class="row g-4 align-items-end">
+        <div class="col-lg-8">
+          <h1>学习作品集</h1>
+          <p>我是 X‑ING。这里记录我的计算机课程、实验代码、项目进展和论文阅读。</p>
+          <div class="d-flex flex-wrap gap-2 mt-4">
+            <a href="courses.html" class="btn btn-primary">浏览课程档案</a>
+            <a href="plan.html" class="btn btn-outline-dark">查看课程规划</a>
+          </div>
         </div>
-      </details>
-    </section>
-    <section id="courses" class="about courses" aria-labelledby="courses-title">
-      <h2 id="courses-title">课程学习</h2>
-      <div>
-        <h3><a href="courses.html">CS-lecture 课程目录 →</a></h3>
-        <p>14 门常规课程，涵盖编程、数学、系统与人工智能，另有公开课作为拓展。</p>
-        <div class="course-links">
-          <a href="courses.html#regular">常规课程</a>
-          <a href="courses.html#extra">课外拓展</a>
-          <a href="https://github.com/3315531721/CS-lecture">GitHub 私有仓库 ↗</a>
+        <div class="col-lg-4">
+          <aside class="hero-note" aria-label="精选学习成果">
+            <h2 class="h6 mb-2">精选成果</h2>
+            <a href="courses/deep-learning.html#work">MNIST 模型对照与结果 ↗</a>
+            <a href="courses/android.html#work">Android 本地数据查询 ↗</a>
+            <a href="notes.html">Transformer 论文阅读 ↗</a>
+          </aside>
         </div>
       </div>
-    </section>
-    <section id="about" class="about" aria-labelledby="about-title">
-      <h2 id="about-title">关于</h2>
-      <p>X‑ING 是一个个人博客，用来整理技术笔记、记录项目进展，也给临时冒出来的想法留个位置。</p>
-    </section>
+    </section><section class="section" id="courses"><h2 class="mb-3">课程学习</h2><div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3 cards"><div class="col"><article class="card feature-card h-100"><div class="card-body">
+      <h3><a href="courses/deep-learning.html#work">深度学习 <span aria-hidden="true">↗</span></a></h3>
+      <p class="minor">MNIST 实验 · 模型定义与对照结果</p>
+    </div></article></div><div class="col"><article class="card feature-card h-100"><div class="card-body">
+      <h3><a href="courses/android.html#work">移动应用开发 <span aria-hidden="true">↗</span></a></h3>
+      <p class="minor">Android 实验 · Intent 与 Room 查询</p>
+    </div></article></div><div class="col"><article class="card feature-card h-100"><div class="card-body">
+      <h3><a href="courses/data-science.html#work">数据科学 <span aria-hidden="true">↗</span></a></h3>
+      <p class="minor">CPCS2018 实验 · 数据审计与校验代码</p>
+    </div></article></div></div><p class="mt-3 mb-0"><a href="courses.html">查看全部 14 门课程 →</a></p></section><section class="section" id="plan"><h2 class="mb-3">课程规划</h2><p class="mb-2">从 C 语言与线性代数开始，继续学习算法、系统与数据库，再用应用和模型实验把知识串起来。</p><a href="plan.html">查看阶段目标与练习 →</a></section><section class="section" id="posts"><h2 class="mb-3">项目与论文笔记</h2><div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3 cards"><div class="col"><article class="card feature-card h-100"><div class="card-body">
+      <h3><a href="projects.html#studyflow">学程 StudyFlow <span aria-hidden="true">↗</span></a></h3>
+      <p class="minor">Android 学习管理原型，展示作业筛选与下一步设计。</p>
+    </div></article></div><div class="col"><article class="card feature-card h-100"><div class="card-body">
+      <h3><a href="projects.html#data-project">CPCS2018 数据分析 <span aria-hidden="true">↗</span></a></h3>
+      <p class="minor">从信号文件对齐与质量检查入手，整理可复核的建模流程。</p>
+    </div></article></div><div class="col"><article class="card feature-card h-100"><div class="card-body">
+      <h3><a href="notes.html">Transformer 及其变体 <span aria-hidden="true">↗</span></a></h3>
+      <p class="minor">把模型结构、通信路径与显存访问分开比较。</p>
+    </div></article></div></div></section>
   </main>
-  <footer class="shell bottom">
-    <span>X‑ING 博客</span>
-    <a href="#top">返回顶部 ↑</a>
+  <footer class="site-footer border-top">
+    <div class="container d-flex flex-wrap justify-content-between gap-2 py-3 small">
+      <span class="minor">X-ING 学习作品集</span>
+      <a href="https://github.com/3315531721/CS-lecture">GitHub 私有仓库 ↗</a>
+    </div>
   </footer>
 </body>
 </html>

@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Transformer、长序列注意力、FlashAttention 与 GQA 的阅读记录。">
+  <meta name="theme-color" content="#f6f5ef">
+  <title>论文笔记 · X-ING</title>
+  <link rel="stylesheet" href="./assets/bootstrap.min.css">
+  <link rel="stylesheet" href="./assets/portfolio.css">
+</head>
+<body id="top">
+  <a class="visually-hidden-focusable" href="#main">跳到正文</a>
+  <header class="site-header border-bottom">
+    <div class="container d-flex align-items-center justify-content-between flex-wrap">
+      <a class="brand" href="./" aria-label="X-ING 学习作品集首页">X‑ING</a>
+      <nav class="nav site-nav" aria-label="主导航"><a class="nav-link" href="./courses.html">课程档案</a>
+<a class="nav-link" href="./plan.html">课程规划</a>
+<a class="nav-link" href="./projects.html">项目</a>
+<a class="nav-link" href="./notes.html" aria-current="page">论文笔记</a></nav>
+    </div>
+  </header>
+  <main id="main" class="container">
+<header class="page-intro"><h1>论文笔记</h1><p>把读过的内容按研究问题、方法和适用条件整理。这组笔记来自《Transformer 及其变体》课程报告。</p></header><section class="section" id="transformer"><h2 class="mb-3">Transformer 的结构与长序列</h2>
+      <div class="prose">
+      <p><strong>问题。</strong>自注意力让不同位置直接交互，也让训练更容易并行；标准全局注意力的交互量随序列长度平方增长。</p>
+      <p><strong>读到的区别。</strong>Transformer‑XL 在片段间保留历史状态。Longformer 限制大多数位置只看附近窗口，并保留少量全局位置。这两种方案分别改变可用的历史和允许发生的交互。</p>
+      <p><strong>复核点。</strong>比较不同方案时，记录有效上下文、任务质量和实测运行时间。</p>
+      <ul class="link-rows">
+        <li><a href="https://arxiv.org/abs/1706.03762">Attention Is All You Need ↗</a></li>
+        <li><a href="https://aclanthology.org/P19-1285/">Transformer-XL ↗</a></li>
+        <li><a href="https://arxiv.org/abs/2004.05150">Longformer ↗</a></li>
+      </ul></div>
+    </section><section class="section" id="efficient-attention"><h2 class="mb-3">FlashAttention 与 GQA 解决什么</h2>
+      <div class="prose">
+      <p><strong>FlashAttention。</strong>用分块和在线 Softmax 减少中间矩阵的显存往返。密集注意力依然会计算所有位置对。</p>
+      <p><strong>GQA。</strong>一组查询头共享键值头，减少自回归解码需要保存和读取的 KV 缓存。端到端收益还受批量、序列长度和硬件制约。</p>
+      <p><strong>复核点。</strong>分别记录提示处理和逐词解码的延迟、吞吐量与显存峰值，再对照任务质量。</p>
+      <ul class="link-rows">
+        <li><a href="https://arxiv.org/abs/2205.14135">FlashAttention ↗</a></li>
+        <li><a href="https://arxiv.org/abs/2305.13245">GQA ↗</a></li>
+      </ul></div>
+    </section>
+  </main>
+  <footer class="site-footer border-top">
+    <div class="container d-flex flex-wrap justify-content-between gap-2 py-3 small">
+      <span class="minor">X-ING 学习作品集</span>
+      <a href="https://github.com/3315531721/CS-lecture">GitHub 私有仓库 ↗</a>
+    </div>
+  </footer>
+</body>
+</html>

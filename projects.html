@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="StudyFlow 学习管理原型和 CPCS2018 数据分析。">
+  <meta name="theme-color" content="#f6f5ef">
+  <title>项目 · X-ING</title>
+  <link rel="stylesheet" href="./assets/bootstrap.min.css">
+  <link rel="stylesheet" href="./assets/portfolio.css">
+</head>
+<body id="top">
+  <a class="visually-hidden-focusable" href="#main">跳到正文</a>
+  <header class="site-header border-bottom">
+    <div class="container d-flex align-items-center justify-content-between flex-wrap">
+      <a class="brand" href="./" aria-label="X-ING 学习作品集首页">X‑ING</a>
+      <nav class="nav site-nav" aria-label="主导航"><a class="nav-link" href="./courses.html">课程档案</a>
+<a class="nav-link" href="./plan.html">课程规划</a>
+<a class="nav-link" href="./projects.html" aria-current="page">项目</a>
+<a class="nav-link" href="./notes.html">论文笔记</a></nav>
+    </div>
+  </header>
+  <main id="main" class="container">
+<header class="page-intro"><h1>项目</h1><p>记录现有原型、实现片段和可复核的实验过程。</p></header><section class="section" id="studyflow"><h2 class="mb-3">学程 StudyFlow</h2>
+      <div class="prose"><p class="eyebrow">Android · 阶段一原型</p>
+      <p>用 Kotlin、Jetpack Compose 和 StateFlow 做学习管理原型。作业、练习、考试和设置四个页面使用本地样例数据。</p>
+      <p>下一步把内存中的作业状态迁移到 Room，并补上编辑、删除和错题记录。</p></div>
+    <div class="prose"><p>作业筛选支持按标题或课程名搜索。排序把已完成作业放在后面，再按截止时间排列。</p>
+      <details open><summary>Kotlin · 作业筛选与排序节选</summary><pre><code>return tasks.asSequence()
+    .filter { task -&gt;
+        term.isEmpty() || task.title.contains(term, ignoreCase = true) ||
+            (courseNames[task.courseId] ?: &quot;&quot;).contains(term, ignoreCase = true)
+    }
+    .filter { task -&gt;
+        when (filter) {
+            TaskFilter.ALL -&gt; true
+            TaskFilter.URGENT -&gt; task.status != TaskStatus.DONE_LOCAL &amp;&amp;
+                !task.dueAt.isAfter(now.plusDays(3))
+            TaskFilter.INCOMPLETE -&gt; task.status != TaskStatus.DONE_LOCAL
+            TaskFilter.DONE -&gt; task.status == TaskStatus.DONE_LOCAL
+        }
+    }
+    .sortedWith(compareBy&lt;HomeworkTask&gt; { it.status == TaskStatus.DONE_LOCAL }.thenBy { it.dueAt })
+    .toList()</code></pre></details></div></section><section class="section" id="data-project"><h2 class="mb-3">CPCS2018 数据分析</h2>
+      <div class="prose"><p class="eyebrow">数据科学 · 课程项目</p>
+      <p>将信号读取、标签对齐、数据质检与模型对照串成一条流程。重点是让数据划分和结果能被人复核。</p>
+      <a href="courses/data-science.html#work">查看数据审计与代码 →</a></div>
+    </section>
+  </main>
+  <footer class="site-footer border-top">
+    <div class="container d-flex flex-wrap justify-content-between gap-2 py-3 small">
+      <span class="minor">X-ING 学习作品集</span>
+      <a href="https://github.com/3315531721/CS-lecture">GitHub 私有仓库 ↗</a>
+    </div>
+  </footer>
+</body>
+</html>
