@@ -204,46 +204,73 @@ def additions(category):
     return section("补充记录", f'<div class="prose">{items}</div>', "more")
 
 
+def home_records(records):
+    return "".join(
+        f"""<article class="academic-record">
+          <p class="record-topic">{topic}</p>
+          <h3><a href="{url}">{title} <span aria-hidden="true">↗</span></a></h3>
+          <p class="record-summary">{summary}</p>
+          <ul class="record-tags" aria-label="关键词">
+            {''.join(f"<li>{tag}</li>" for tag in tags)}
+          </ul>
+        </article>"""
+        for title, topic, summary, url, tags in records
+    )
+
+
 def build_home():
-    cover = f"""
-    <section class="home-cover" id="about" aria-labelledby="home-title">
-      <div class="cover-intro">
-        <div class="cover-avatar" aria-hidden="true">X</div>
+    profile = f"""
+    <section class="academic-profile" id="about" aria-labelledby="home-title">
+      <div class="profile-copy">
         <h1 id="home-title">{escape(CONTENT["cover_title"])}</h1>
-        <div class="cover-signature">
-          <p>{escape(CONTENT["signature"])}</p>
-          <div class="cover-links"><a href="courses.html">课程档案</a><a href="plan.html">课程规划</a><a href="{GITHUB}">GitHub</a></div>
+        <p class="profile-summary">{escape(CONTENT["signature"])}</p>
+        <dl class="profile-facts">
+          <div><dt>学习方向</dt><dd>计算机基础、移动开发与深度学习</dd></div>
+          <div><dt>作品形式</dt><dd>课程实验、代码片段与论文阅读记录</dd></div>
+        </dl>
+        <div class="profile-links">
+          <a class="profile-primary" href="#posts">浏览代表成果</a>
+          <a href="https://github.com/3315531721">GitHub 主页 <span aria-hidden="true">↗</span></a>
         </div>
       </div>
-      <a class="cover-down" href="#courses" aria-label="向下浏览课程与作品"><span aria-hidden="true"></span></a>
-      <div class="cover-wave" aria-hidden="true"></div>
+      <figure class="profile-art">
+        <img src="assets/sakurairo-cover.webp" width="1672" height="941" alt="">
+        <span aria-hidden="true">X</span>
+      </figure>
     </section>"""
-    showcases = [
-        ("课程档案", "14 门计算机课程", "courses.html", "course"),
-        ("课程规划", "基础 · 系统 · 应用 · 实验", "plan.html", "plan"),
-        ("项目", "StudyFlow 与数据分析", "projects.html", "project"),
+    jump = """
+    <nav class="overview-nav" aria-label="本页目录">
+      <a href="#posts">代表成果</a>
+      <a href="#plan">学习路径</a>
+      <a href="#projects">项目</a>
+      <a href="#notes">论文笔记</a>
+    </nav>"""
+    evidence = [
+        ("MNIST 手写数字识别", "深度学习实验", "在同一数据划分下对照 MLP、CNN 与自定义网络。自定义 CNN 测试准确率为 98.50%。", "courses/deep-learning.html#work", ("Python", "PyTorch", "模型评估")),
+        ("用 Room 查询本地新闻", "移动应用开发实验", "用 Room 实现标题搜索与发布时间排序，串起新闻列表和详情页。", "courses/android.html#work", ("Java", "Android", "Room")),
     ]
-    display = "".join(
-        f'<a class="showcase-card art-{art}" href="{url}"><div><strong>{title}</strong><span>{subtitle}</span></div></a>'
-        for title, subtitle, url, art in showcases
+    selected = section("代表成果", f'<div class="academic-grid">{home_records(evidence)}</div>', "posts")
+    stages = "".join(
+        f'<li><span>{title}</span><p>{"、".join(COURSES[key][0] for key in keys)}</p></li>'
+        for title, keys, _ in PLAN
     )
-    work = [
-        ("MNIST 手写数字识别", "深度学习 · Python", "对照 MLP、CNN 与自定义网络。自定义 CNN 的测试准确率为 98.50%。", "courses/deep-learning.html#work", "mnist"),
-        ("用 Room 查询本地新闻", "移动应用开发 · Java", "标题搜索、发布时间排序，以及列表到详情的衔接。", "courses/android.html#work", "android"),
-        ("CPCS2018 数据审计", "数据科学 · Python", "从信号文件与标签的对齐出发，检查异常和重复记录。", "courses/data-science.html#work", "data"),
-        ("Transformer 及其变体", "论文笔记", "从长序列注意力读到 FlashAttention 与 GQA，整理三种常见的计算瓶颈。", "notes.html", "notes"),
+    study = section("学习路径",
+        '<div class="study-links" id="courses"><a href="courses.html">全部 14 门课程 →</a>'
+        '<a href="plan.html">阶段目标与练习 →</a></div>'
+        f'<ol class="study-stages">{stages}</ol>',
+        "plan")
+    projects = [
+        ("学程 StudyFlow", "阶段一原型", "Android 学习管理原型，含作业筛选、练习作答与考试日程。", "projects.html#studyflow", ("Kotlin", "Jetpack Compose")),
+        ("CPCS2018 数据分析", "课程项目", "核对心电信号与标签，检查缺失、异常和重复记录。", "projects.html#data-project", ("Python", "数据审计")),
     ]
-    articles = "".join(
-        f'<article class="iro-post"><a class="post-art art-{art}" href="{url}" aria-label="{title}">'
-        + ('<img src="assets/mnist-samples.png" width="542" height="102" alt="">' if art == "mnist" else "")
-        + f'</a><div class="post-copy"><p class="post-meta">{kind}</p><h3><a href="{url}">{title}</a></h3>'
-        + f'<p class="minor">{summary}</p><a class="post-more" href="{url}" aria-label="阅读{title}">阅读全文 →</a></div></article>'
-        for title, kind, summary, url, art in work
-    )
-    catalog = section("学习导航", f'<div class="showcase">{display}</div>', "courses")
-    related = section("学习记录", f'<div class="post-list">{articles}</div>', "posts")
-    plan = section("学习路线", '<div class="plan-link"><p>从 C 语言和线性代数起步，经过系统与应用课，再用模型实验和论文阅读串联。</p><a href="plan.html">查看课程规划 →</a></div>', "plan")
-    write("index.html", "学习作品集", "X-ING 的课程成果、项目、论文笔记与课程规划。", "", catalog + related + plan, cover)
+    notes = [
+        ("Transformer 与长序列", "长上下文", "比较 Transformer‑XL 的跨片段记忆与 Longformer 的局部窗口。", "notes.html#transformer", ("Transformer‑XL", "Longformer")),
+        ("FlashAttention 与 GQA", "推理效率", "记录显存访问与 KV 缓存如何影响推理效率。", "notes.html#efficient-attention", ("FlashAttention", "GQA")),
+    ]
+    project_section = section("项目", f'<div class="academic-grid">{home_records(projects)}</div>', "projects")
+    note_section = section("论文笔记", f'<div class="academic-grid">{home_records(notes)}</div>', "notes")
+    write("index.html", "学习作品集", "X-ING 的课程成果、项目、论文笔记与课程规划。", "",
+          profile + jump + selected + study + project_section + note_section, "")
 
 
 def build_catalog():
@@ -367,7 +394,7 @@ def build_search():
         ("学程 StudyFlow", "Android 学习管理原型", "projects.html#studyflow"),
         ("CPCS2018 数据分析", "数据审计、建模与复核", "projects.html#data-project"),
         ("MNIST 手写数字识别", "PyTorch · MLP 与 CNN 模型对照", "courses/deep-learning.html#work"),
-        ("Transformer 与长序列", "论文笔记", "notes.html#transformer"),
+        ("Transformer 与长序列", "长上下文", "notes.html#transformer"),
         ("FlashAttention 与 GQA", "显存访问、推理与 KV 缓存", "notes.html#efficient-attention"),
     ])
     for entry in CONTENT["entries"]:

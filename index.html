@@ -28,20 +28,74 @@
   </header>
   <main id="main">
 
-    <section class="home-cover" id="about" aria-labelledby="home-title">
-      <div class="cover-intro">
-        <div class="cover-avatar" aria-hidden="true">X</div>
+    <div class="container site-content">
+
+    <section class="academic-profile" id="about" aria-labelledby="home-title">
+      <div class="profile-copy">
         <h1 id="home-title">X‑ING 学习作品集</h1>
-        <div class="cover-signature">
-          <p>计算机课程、实验代码、项目进展与论文笔记。</p>
-          <div class="cover-links"><a href="courses.html">课程档案</a><a href="plan.html">课程规划</a><a href="https://github.com/3315531721/CS-lecture">GitHub</a></div>
+        <p class="profile-summary">计算机课程、实验代码、项目进展与论文笔记。</p>
+        <dl class="profile-facts">
+          <div><dt>学习方向</dt><dd>计算机基础、移动开发与深度学习</dd></div>
+          <div><dt>作品形式</dt><dd>课程实验、代码片段与论文阅读记录</dd></div>
+        </dl>
+        <div class="profile-links">
+          <a class="profile-primary" href="#posts">浏览代表成果</a>
+          <a href="https://github.com/3315531721">GitHub 主页 <span aria-hidden="true">↗</span></a>
         </div>
       </div>
-      <a class="cover-down" href="#courses" aria-label="向下浏览课程与作品"><span aria-hidden="true"></span></a>
-      <div class="cover-wave" aria-hidden="true"></div>
+      <figure class="profile-art">
+        <img src="assets/sakurairo-cover.webp" width="1672" height="941" alt="">
+        <span aria-hidden="true">X</span>
+      </figure>
     </section>
-    <div class="container site-content">
-<section class="section" id="courses"><h2 class="mb-3">学习导航</h2><div class="showcase"><a class="showcase-card art-course" href="courses.html"><div><strong>课程档案</strong><span>14 门计算机课程</span></div></a><a class="showcase-card art-plan" href="plan.html"><div><strong>课程规划</strong><span>基础 · 系统 · 应用 · 实验</span></div></a><a class="showcase-card art-project" href="projects.html"><div><strong>项目</strong><span>StudyFlow 与数据分析</span></div></a></div></section><section class="section" id="posts"><h2 class="mb-3">学习记录</h2><div class="post-list"><article class="iro-post"><a class="post-art art-mnist" href="courses/deep-learning.html#work" aria-label="MNIST 手写数字识别"><img src="assets/mnist-samples.png" width="542" height="102" alt=""></a><div class="post-copy"><p class="post-meta">深度学习 · Python</p><h3><a href="courses/deep-learning.html#work">MNIST 手写数字识别</a></h3><p class="minor">对照 MLP、CNN 与自定义网络。自定义 CNN 的测试准确率为 98.50%。</p><a class="post-more" href="courses/deep-learning.html#work" aria-label="阅读MNIST 手写数字识别">阅读全文 →</a></div></article><article class="iro-post"><a class="post-art art-android" href="courses/android.html#work" aria-label="用 Room 查询本地新闻"></a><div class="post-copy"><p class="post-meta">移动应用开发 · Java</p><h3><a href="courses/android.html#work">用 Room 查询本地新闻</a></h3><p class="minor">标题搜索、发布时间排序，以及列表到详情的衔接。</p><a class="post-more" href="courses/android.html#work" aria-label="阅读用 Room 查询本地新闻">阅读全文 →</a></div></article><article class="iro-post"><a class="post-art art-data" href="courses/data-science.html#work" aria-label="CPCS2018 数据审计"></a><div class="post-copy"><p class="post-meta">数据科学 · Python</p><h3><a href="courses/data-science.html#work">CPCS2018 数据审计</a></h3><p class="minor">从信号文件与标签的对齐出发，检查异常和重复记录。</p><a class="post-more" href="courses/data-science.html#work" aria-label="阅读CPCS2018 数据审计">阅读全文 →</a></div></article><article class="iro-post"><a class="post-art art-notes" href="notes.html" aria-label="Transformer 及其变体"></a><div class="post-copy"><p class="post-meta">论文笔记</p><h3><a href="notes.html">Transformer 及其变体</a></h3><p class="minor">从长序列注意力读到 FlashAttention 与 GQA，整理三种常见的计算瓶颈。</p><a class="post-more" href="notes.html" aria-label="阅读Transformer 及其变体">阅读全文 →</a></div></article></div></section><section class="section" id="plan"><h2 class="mb-3">学习路线</h2><div class="plan-link"><p>从 C 语言和线性代数起步，经过系统与应用课，再用模型实验和论文阅读串联。</p><a href="plan.html">查看课程规划 →</a></div></section>
+    <nav class="overview-nav" aria-label="本页目录">
+      <a href="#posts">代表成果</a>
+      <a href="#plan">学习路径</a>
+      <a href="#projects">项目</a>
+      <a href="#notes">论文笔记</a>
+    </nav><section class="section" id="posts"><h2 class="mb-3">代表成果</h2><div class="academic-grid"><article class="academic-record">
+          <p class="record-topic">深度学习实验</p>
+          <h3><a href="courses/deep-learning.html#work">MNIST 手写数字识别 <span aria-hidden="true">↗</span></a></h3>
+          <p class="record-summary">在同一数据划分下对照 MLP、CNN 与自定义网络。自定义 CNN 测试准确率为 98.50%。</p>
+          <ul class="record-tags" aria-label="关键词">
+            <li>Python</li><li>PyTorch</li><li>模型评估</li>
+          </ul>
+        </article><article class="academic-record">
+          <p class="record-topic">移动应用开发实验</p>
+          <h3><a href="courses/android.html#work">用 Room 查询本地新闻 <span aria-hidden="true">↗</span></a></h3>
+          <p class="record-summary">用 Room 实现标题搜索与发布时间排序，串起新闻列表和详情页。</p>
+          <ul class="record-tags" aria-label="关键词">
+            <li>Java</li><li>Android</li><li>Room</li>
+          </ul>
+        </article></div></section><section class="section" id="plan"><h2 class="mb-3">学习路径</h2><div class="study-links" id="courses"><a href="courses.html">全部 14 门课程 →</a><a href="plan.html">阶段目标与练习 →</a></div><ol class="study-stages"><li><span>基础</span><p>计算机导论、C 语言程序设计、C 语言程序设计实验、线性代数</p></li><li><span>系统</span><p>数据结构与算法、数字电子技术、操作系统、数据库原理及应用 A</p></li><li><span>应用</span><p>移动应用开发、人工智能导论、数据科学</p></li><li><span>实验</span><p>深度学习</p></li></ol></section><section class="section" id="projects"><h2 class="mb-3">项目</h2><div class="academic-grid"><article class="academic-record">
+          <p class="record-topic">阶段一原型</p>
+          <h3><a href="projects.html#studyflow">学程 StudyFlow <span aria-hidden="true">↗</span></a></h3>
+          <p class="record-summary">Android 学习管理原型，含作业筛选、练习作答与考试日程。</p>
+          <ul class="record-tags" aria-label="关键词">
+            <li>Kotlin</li><li>Jetpack Compose</li>
+          </ul>
+        </article><article class="academic-record">
+          <p class="record-topic">课程项目</p>
+          <h3><a href="projects.html#data-project">CPCS2018 数据分析 <span aria-hidden="true">↗</span></a></h3>
+          <p class="record-summary">核对心电信号与标签，检查缺失、异常和重复记录。</p>
+          <ul class="record-tags" aria-label="关键词">
+            <li>Python</li><li>数据审计</li>
+          </ul>
+        </article></div></section><section class="section" id="notes"><h2 class="mb-3">论文笔记</h2><div class="academic-grid"><article class="academic-record">
+          <p class="record-topic">长上下文</p>
+          <h3><a href="notes.html#transformer">Transformer 与长序列 <span aria-hidden="true">↗</span></a></h3>
+          <p class="record-summary">比较 Transformer‑XL 的跨片段记忆与 Longformer 的局部窗口。</p>
+          <ul class="record-tags" aria-label="关键词">
+            <li>Transformer‑XL</li><li>Longformer</li>
+          </ul>
+        </article><article class="academic-record">
+          <p class="record-topic">推理效率</p>
+          <h3><a href="notes.html#efficient-attention">FlashAttention 与 GQA <span aria-hidden="true">↗</span></a></h3>
+          <p class="record-summary">记录显存访问与 KV 缓存如何影响推理效率。</p>
+          <ul class="record-tags" aria-label="关键词">
+            <li>FlashAttention</li><li>GQA</li>
+          </ul>
+        </article></div></section>
     </div>
   </main>
   <a class="back-top" href="#top" aria-label="返回顶部">↑</a>
